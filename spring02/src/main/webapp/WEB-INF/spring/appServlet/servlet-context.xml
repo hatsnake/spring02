@@ -23,6 +23,8 @@
 	
 	<context:component-scan base-package="com.hatsnake.spring02" />
 	
-	
-	
+	<!-- 추가 (빈등록을 위해 클래스 스캔) -->
+	<context:component-scan base-package="com.hatsnake.spring02.controller"></context:component-scan>
+	<context:component-scan base-package="com.hatsnake.spring02.service"></context:component-scan>
+	<context:component-scan base-package="com.hatsnake.spring02.dao"></context:component-scan>
 </beans:beans>

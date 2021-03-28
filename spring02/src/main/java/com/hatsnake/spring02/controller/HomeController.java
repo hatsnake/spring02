@@ -1,4 +1,4 @@
-package com.hatsnake.spring02;
+package com.hatsnake.spring02.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
