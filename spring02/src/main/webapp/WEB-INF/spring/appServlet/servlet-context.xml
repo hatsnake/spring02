@@ -30,7 +30,6 @@
 	<context:component-scan base-package="com.hatsnake.spring02.controller"></context:component-scan>
 	<context:component-scan base-package="com.hatsnake.spring02.service"></context:component-scan>
 	<context:component-scan base-package="com.hatsnake.spring02.dao"></context:component-scan>
-	<context:component-scan base-package="com.hatsnake.spring02.security"></context:component-scan>
 	
 	<!-- @Secured 어노테이션 작성하면 스프링 시큐리티 적용 -->
 	<security:global-method-security secured-annotations="enabled"/>
