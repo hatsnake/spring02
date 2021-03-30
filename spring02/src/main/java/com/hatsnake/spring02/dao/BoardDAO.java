@@ -6,16 +6,18 @@ import com.hatsnake.spring02.domain.BoardDTO;
 
 public interface BoardDAO {
 
-	List<BoardDTO> listAll();
+	public List<BoardDTO> listAll(int start, int end, String searchOption, String keyword) throws Exception;
+	
+	public int countArticle(String searchOption, String keyword) throws Exception;
 
-	BoardDTO read(int bno);
+	public BoardDTO read(int bno) throws Exception;
 
-	void increaseViewctn(int bno);
+	public void increaseViewctn(int bno) throws Exception;
 
-	void create(BoardDTO dto);
+	public void create(BoardDTO dto) throws Exception;
 
-	void delete(int bno);
+	public void delete(int bno) throws Exception;
 
-	void update(BoardDTO dto);
+	public void update(BoardDTO dto) throws Exception;
 
 }

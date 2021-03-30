@@ -1,7 +1,9 @@
 package com.hatsnake.spring02.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hatsnake.spring02.domain.BoardDTO;
+import com.hatsnake.spring02.domain.BoardPager;
 import com.hatsnake.spring02.service.BoardService;
 
 @Controller
@@ -25,10 +28,28 @@ public class BoardController {
 	private BoardService boardService;
 	
 	//게시글 목록화면
-	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String list(Model model) throws Exception {
-		List<BoardDTO> list = boardService.listAll();
-		model.addAttribute("list", list);
+	@RequestMapping(value="/list")
+	public String list(Model model, @RequestParam(defaultValue="all") String searchOption,
+					   @RequestParam(defaultValue="") String keyword, 
+					   @RequestParam(defaultValue="1") int curPage) throws Exception {
+		//레코드 갯수
+		int count = boardService.countArticle(searchOption, keyword);
+		
+		//페이징 처리
+		BoardPager boardPager = new BoardPager(count, curPage);
+		int start = boardPager.getPageBegin();
+		int end = boardPager.getPageEnd();
+		
+		List<BoardDTO> list = boardService.listAll(start, end, searchOption, keyword);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("count", count);
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		map.put("boardPager", boardPager);
+	
+		model.addAttribute("map", map);
 		
 		return "board/list";
 	}

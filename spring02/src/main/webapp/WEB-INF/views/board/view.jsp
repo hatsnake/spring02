@@ -27,6 +27,10 @@
 			var bno = $("#bno").val();
 			location.href="${path}/board/update?bno="+bno;
 		});		
+		
+		$(".list").on("click", function() {
+			location.href="${path}/board/list?curPage=${curPage}&searchOption=${searchOption}&keyword=${keyword}";
+		});				
 	});
 </script>
 
@@ -59,6 +63,7 @@
 			<button type="button" class="update">수정</button>
 			<button type="button" class="delete">삭제</button>
 		</c:if>
+		<button type="button" class="list">목록</button>
 	</form>
 	
 	<%@ include file="../include/footer.jsp" %>

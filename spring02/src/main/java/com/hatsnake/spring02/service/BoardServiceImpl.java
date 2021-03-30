@@ -16,12 +16,26 @@ public class BoardServiceImpl implements BoardService {
 	@Inject
 	private BoardDAO boardDao;
 
+	/*
 	//게시글 전체 조회
 	@Override
 	public List<BoardDTO> listAll() throws Exception {
 		return boardDao.listAll();
 	}
+	*/
 
+	//게시글 전체 조회 (검색)
+	@Override
+	public List<BoardDTO> listAll(int start, int end, String searchOption, String keyword) throws Exception {
+		return boardDao.listAll(start, end, searchOption, keyword);
+	}
+
+	//게시글 레코드 갯수
+	@Override
+	public int countArticle(String searchOption, String keyword) throws Exception {
+		return boardDao.countArticle(searchOption, keyword);
+	}	
+	
 	//게시글 상세 보기
 	@Override
 	public BoardDTO read(int bno) throws Exception {

@@ -8,7 +8,8 @@ import com.hatsnake.spring02.domain.BoardDTO;
 
 public interface BoardService {
 
-	public List<BoardDTO> listAll() throws Exception;
+	
+	// public List<BoardDTO> listAll() throws Exception;
 	
 	public BoardDTO read(int bno) throws Exception;
 	
@@ -19,5 +20,9 @@ public interface BoardService {
 	public void update(BoardDTO dto) throws Exception;
 	
 	public void delete(int bno) throws Exception;
+
+	public List<BoardDTO> listAll(int start, int end, String searchOption, String keyword) throws Exception;
+
+	public int countArticle(String searchOption, String keyword) throws Exception;
 
 }
