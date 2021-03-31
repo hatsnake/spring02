@@ -68,7 +68,7 @@ public class BoardDAOImpl implements BoardDAO {
 	//게시글 삭제 처리
 	@Override
 	public void delete(int bno) throws Exception {
-		sqlSession.delete("board.deleteArticle", bno);
+		sqlSession.update("board.deleteArticle", bno);
 	}
 
 	//게시글 수정 처리

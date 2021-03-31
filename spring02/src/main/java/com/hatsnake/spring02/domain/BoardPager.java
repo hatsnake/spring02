@@ -157,5 +157,4 @@ public class BoardPager {
 		this.blockEnd = blockEnd;
 	}
 	
-	
 }

@@ -6,8 +6,9 @@
 	 <!-- 게시글 전체 목록 조회 (검색) -->
 	 <select id="listAll" resultType="com.hatsnake.spring02.domain.BoardDTO">
 	 	<include refid="pagingHeader"></include>
-	 	select rownum, bno, title, content, writer, regdate, viewcnt
-	 	from board
+	 	select rownum, bno, title, content, writer, regdate, viewcnt,
+	 	(select count(*) from reply where bno=b.bno) as recnt, show
+	 	from board b
 	 	<!-- WHERE절을 include 태그로 삽입 -->
 	 	<include refid="search"></include>
 	 	order by bno desc, regdate desc
@@ -48,16 +49,18 @@
 	 
 	 <!-- 게시글 작성 -->
 	 <insert id="insert">
-	 	insert into board (bno, title, content, writer) 
+	 	insert into board (bno, title, content, writer, show) 
 	 	values ((select nvl(max(bno)+1, 1) from board),
-	 		#{title}, #{content}, #{writer}
+	 		#{title}, #{content}, #{writer}, 'y'
 	 	)
 	 </insert>
 	
 	 <!-- 게시글 상세보기 조회 -->
 	 <select id="view" resultType="com.hatsnake.spring02.domain.BoardDTO">
-	 	 select * from board 
-	 	 where bno = #{bno}
+	 	 select bno, title, content, b.regdate, writer, viewcnt, name, show 
+	 	 from board b, users u
+	 	 where b.writer = u.userid
+	 	 and bno = #{bno}
 	 </select>
 	 
 	 <!-- 게시글 조회수 증가 처리 -->
@@ -74,9 +77,9 @@
 	 </update>
 	 
 	 <!-- 게시글 삭제 처리 -->
-	 <delete id="deleteArticle">
-	 	delete from board
+	 <update id="deleteArticle">
+	 	update board set show = 'n'
 	 	where bno = #{bno}
-	 </delete>
+	 </update>
 	 
  </mapper>

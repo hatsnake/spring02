@@ -2,17 +2,14 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>메인 화면</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>  
+<title>메인 화면</title>
 
 <style type="text/css">
 
 </style>
+
+<%@ include file="../include/util.jsp" %>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -61,18 +58,43 @@ function list(page) {
 				<th>조회수</th>
 			</tr>
 			<c:forEach var="row" items="${map.list}">
-				<tr>
-					<td>${row.bno}</td>
-					<td>
-						<a href="${path}/board/view?bno=${row.bno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">${row.title}</a>
-					</td>
-					<td>${row.writer}</td>
-					<td>
-						<!-- fmt태그 사용 -->
-						<fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-					</td>
-					<td>${row.viewcnt}</td>
-				</tr>
+				<c:choose>
+					<c:when test="${row.show == 'y'}">
+						<tr>
+							<td>${row.bno}</td>
+							<td>
+								<a href="${path}/board/view?bno=${row.bno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">${row.title}
+									<!-- 댓글이 있으면 게시글 이름 옆에 출력하기 -->
+									<c:if test="${row.recnt > 0 }">
+										<span style="color:red;">(${row.recnt})
+										</span>
+									</c:if>
+								</a>
+							</td>
+							<td>${row.writer}</td>
+							<td>
+								<!-- fmt태그 사용 -->
+								<fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+							</td>
+							<td>${row.viewcnt}</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td colspan="5" align="left">
+								<c:if test="${row.recnt > 0}">
+									<a href="${path}/board/view?bno=${row.bno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">
+										삭제된 게시글입니다.
+										<span style="color:red;">(${row.recnt})</span>
+									</a>
+								</c:if>
+								<c:if test="${row.recnt == 0}">
+									삭제된 게시글입니다.
+								</c:if>
+							</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 			<tr>
 				<td colspan="5">
