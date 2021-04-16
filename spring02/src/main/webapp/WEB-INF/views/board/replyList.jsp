@@ -29,12 +29,14 @@ $(document).ready(function() {
 function replyJson() {
 	var replytext = $("#replytext").val();
 	var bno = "${bno}";
+	var writer = "${writer}";
 	//비밀댓글 체크여부
 	var secretReply = "n";
 	//비밀댓글 체크 true or false
 	if($("#secretReply").is(":checked")) {
 		secretReply = "y";
 	}
+	
 	$.ajax({
 		type: "post",
 		url: "${path}/reply/insertRest",
@@ -45,7 +47,8 @@ function replyJson() {
 		data: JSON.stringify({
 			bno : bno,
 			replytext : replytext,
-			secretReply : secretReply
+			secretReply : secretReply,
+			writer : writer
 		}),
 		success: function() {
 			alert("댓글이 등록되었습니다. (json방식)");
@@ -65,6 +68,34 @@ function listReplyRest(num) {
 	})
 }
 
+//댓글 수정
+$("#replyUpdate").on("click", function() {
+
+	if(confirm("댓글을 수정하시겠습니까?")) {
+		var modifyReplytext = $("#modify_replytext").val();
+		var rno = $("#modify_rno").text();
+	
+		$.ajax({
+			type: "put",
+			url: "${path}/reply/update/"+rno,
+			headers: {
+				"Content-Type" : "application/json"
+			},
+			data: JSON.stringify({
+				replytext : modifyReplytext
+			}),
+			dataType:"text",
+			success: function(result) {
+				if(result == "success") {
+					alert("댓글 수정이 완료되었습니다.")
+					listReplyRest('1');
+				}
+			}
+		});
+	}
+	
+});
+
 </script>
 
 <!-- 댓글 갯수 -->
@@ -82,7 +113,7 @@ function listReplyRest(num) {
 	  <textarea class="form-control" id="replytext" placeholder="댓글을 작성해주세요" style="height: 100px"></textarea>
 	  <div>
 	    <div class="form-check" style="float:left">
-		  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault secretReply">
+		  <input class="form-check-input" type="checkbox" value="" id="secretReply">
 		  <label class="form-check-label" for="flexCheckDefault">
 		    비밀댓글
 		  </label>
@@ -103,16 +134,16 @@ function listReplyRest(num) {
 				${row.replyer}
 			</h5>
 			<div class="comment-footer"> 
-				<span class="date"><fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></span> 
+				<div class="date"><fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></div> 
 				 
 				<span class="action-icons"> 
 					<c:if test="${username == row.replyer}">
 						<span type="button" id="btnModify" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="showReplyModify('${row.rno}')" data-abc="true">
 							<i class="far fa-edit"></i>
 						</span> 
+						
+						<span class="far fa-trash-alt" onclick="deleteReply('${row.rno}')"></span>
 					</c:if>
-
-					<span class="far fa-trash-alt" onclick="deleteReply('${row.rno}')"></span>
 
 				</span> 
 			</div>
@@ -129,8 +160,8 @@ function listReplyRest(num) {
 		<!-- 처음페이지로 이동 : 현재페이지가 1보다 크면 [처음]나옴  -->
 		<c:if test="${replyPager.curBlock > 1}">
 			<li class="page-item">
-				<a class="page-link" href="javascript:list('1')">
-					<span class="page-link">&laquo;</span>
+				<a class="page-link" href="javascript:listReplyRest('1')">
+					&laquo;
 				</a>
 			</li>
 		</c:if>
@@ -138,8 +169,8 @@ function listReplyRest(num) {
 		<!-- 이전페이지 블록으로 이동 : 현재 페이지 블럭이 1보다 크면 [이전]나옴 -->
 		<c:if test="${replyPager.curPage > 1}">
 			<li class="page-item">
-				<a class="page-link" href="javascript:list('${replyPager.prevPage}')">
-					<span class="page-link">&lt;</span>
+				<a class="page-link" href="javascript:listReplyRest('${replyPager.prevPage}')">
+					&lt;
 				</a>
 			</li>
 		</c:if>
@@ -156,7 +187,7 @@ function listReplyRest(num) {
 				</c:when>
 				<%-- 다른 페이지 --%>
 				<c:otherwise>
-					<li class="page-item"><a class="page-link" href="javascript:list('${num}')">${num}</a></li>
+					<li class="page-item"><a class="page-link" href="javascript:listReplyRest('${num}')">${num}</a></li>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -164,7 +195,7 @@ function listReplyRest(num) {
 		<!-- 다음페이지 블록으로 이동 : 현재페이지 블럭이 전체 페이지 블럭보다 작거나 같으면 [다음]나옴 -->
 		<c:if test="${replyPager.curPage <= replyPager.totalPage}">
 			<li class="page-item">
-				<a class="page-link" href="javascript:list('${replyPager.nextPage}')">
+				<a class="page-link" href="javascript:listReplyRest('${replyPager.nextPage}')">
 					&gt;
 				</a>
 			</li>
@@ -173,7 +204,7 @@ function listReplyRest(num) {
 		<!-- 끝페이지로 이동 : 현재 페이지가 전체 페이지보다 작거나 같으면 [끝]나옴 -->
 		<c:if test="${replyPager.curPage <= replyPager.totalPage}">
 			<li class="page-item">
-				<a class="page-link" href="javascript:list('${replyPager.totalPage}')">
+				<a class="page-link" href="javascript:listReplyRest('${replyPager.totalPage}')">
 					&raquo;
 				</a>
 			</li>
@@ -198,8 +229,8 @@ function listReplyRest(num) {
 		<textarea id="modify_replytext" rows="5" cols="82"></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="replyUpdate">수정 저장</button>
       </div>
     </div>
   </div>

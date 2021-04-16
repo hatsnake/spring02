@@ -137,7 +137,7 @@ function list(page) {
 							<c:if test="${map.boardPager.curBlock > 1}">
 								<li class="page-item">
 									<a class="page-link" href="javascript:list('1')">
-										<span class="page-link">&laquo;</span>
+										&laquo;
 									</a>
 								</li>
 							</c:if>
@@ -146,7 +146,7 @@ function list(page) {
 							<c:if test="${map.boardPager.curPage > 1}">
 								<li class="page-item">
 									<a class="page-link" href="javascript:list('${map.boardPager.prevPage}')">
-										<span class="page-link">&lt;</span>
+										&lt;
 									</a>
 								</li>
 							</c:if>

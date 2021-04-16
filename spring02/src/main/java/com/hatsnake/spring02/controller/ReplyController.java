@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hatsnake.spring02.domain.BoardDTO;
 import com.hatsnake.spring02.domain.ReplyDTO;
 import com.hatsnake.spring02.domain.ReplyPager;
+import com.hatsnake.spring02.service.BoardService;
 import com.hatsnake.spring02.service.ReplyService;
 
 @RestController
@@ -29,6 +31,9 @@ public class ReplyController {
 	
 	@Inject
 	private ReplyService replyService;
+	
+	@Inject
+	private BoardService boardService;
 	
 	//댓글 입력
 	@RequestMapping("/insert")
@@ -107,7 +112,7 @@ public class ReplyController {
 	//댓글 목록 (Rest방식)
 	@RequestMapping(value="/list/{bno}/{curPage}", method=RequestMethod.GET)
 	public ModelAndView replyList(@PathVariable("bno") int bno, @PathVariable int curPage,
-					   ModelAndView mav, Principal principal) {
+					   ModelAndView mav, Principal principal) throws Exception {
 		
 		String username = null;
 		
@@ -123,6 +128,7 @@ public class ReplyController {
 		int start = replyPager.getPageBegin();
 		int end = replyPager.getPageEnd();
 		List<ReplyDTO> list = replyService.list(bno, start, end, username);
+		BoardDTO board = boardService.read(bno);
 		
 		mav.setViewName("board/replyList");
 		mav.addObject("list", list);
@@ -130,6 +136,7 @@ public class ReplyController {
 		mav.addObject("replyPager", replyPager);
 		mav.addObject("username", username);
 		mav.addObject("bno", bno);
+		mav.addObject("writer", board.getWriter());
 		
 		return mav;
 	}

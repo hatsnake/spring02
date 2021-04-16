@@ -5,7 +5,7 @@ public class BoardPager {
 	// 페이지당 게시물 수
 	public static final int PAGE_SCALE = 10;
 	// 화면당 페이지 수
-	public static final int BLOCK_SCALE = 10;
+	public static final int BLOCK_SCALE = 5;
 	private int curPage; // 현재 페이수
 	private int prevPage; // 이전 페이지
 	private int nextPage; // 다음 페이지
@@ -58,9 +58,12 @@ public class BoardPager {
 		// [이전] 61 62 => 이러한 경우 70번까지 나오지 않도록하기 위해서
 		if(blockEnd > totalPage) blockEnd = totalPage;
 		// *이전을 눌렀을 때 이동할 페이지 번호
-		prevPage = (curPage == 1)? 1:(curPage-1);
+		/*prevPage = (curPage == 1)? 1:(curPage-1);*/
+		prevPage = (curPage == 1)? 1:(curBlock-1)*BLOCK_SCALE;
+		if(prevPage <= 0) prevPage = 1;
 		// *다음을 눌렀을 때 이동할 페이지 번호
-		nextPage = curPage > totalPage ? totalPage : (curPage+1) ;
+		/*nextPage = curPage > totalPage ? totalPage : (curPage+1);*/
+		nextPage = curBlock > totalBlock ? (curBlock*BLOCK_SCALE) : (curBlock*BLOCK_SCALE)+1;
 		// 마지막 페이지가 범위를 초과하지 않도록 처리
 		if(nextPage >= totalPage) nextPage = totalPage;
 		

@@ -1,13 +1,8 @@
 package com.hatsnake.spring02.service;
 
-import java.security.Principal;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.hatsnake.spring02.dao.ReplyDAO;
@@ -30,9 +25,11 @@ public class ReplyServiceImpl implements ReplyService {
 					dto.setReplytext("비밀 댓글입니다.");
 				} else {
 					String writer = dto.getWriter();
-					String replyer = dto.getReplytext();
+					String replyer = dto.getReplyer();
 					//로그인한 사용자가 게시물의 작성자x 댓글 작성자x 비밀댓글로 처리
-					if(!username.equals(writer) && !username.equals(replyer)) {
+					if(username.equals(writer) || username.equals(replyer)) {
+						dto.setReplytext(dto.getReplytext());
+					} else {
 						dto.setReplytext("비밀 댓글입니다.");
 					}
 				}
