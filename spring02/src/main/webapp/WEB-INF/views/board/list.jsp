@@ -5,19 +5,68 @@
 
 <head>
 <%@ include file="../include/util.jsp" %>
-	
+<style>
+.boardDate {
+	font-size:0.9rem;
+}
+</style>
 <script type="text/javascript">
 //글쓰기 페이지 이동
 $(document).ready(function() {
 	$(".write").on("click", function() {
 		location.href="${path}/board/write";
 	});
+
+	
+	var boardDate = document.querySelectorAll(".boardDate");
+
+	for(var i = 0; i<boardDate.length; i++) {
+		var regdate = boardDate[i].innerText;
+		var createdAt = new Date(regdate);
+		var result = displayedAt(createdAt);
+
+		$(".boardDate:eq("+i+")").html(result);
+	}
 });
 
 //원하는 페이지로 이동시 검색조건, 키워드 값 유지를 위한 함수
 function list(page) {
 	location.href="${path}/board/list?curPage="+page+"&searchOption=${map.searchOption}"+"&keyword=${map.keyword}";
 }
+
+
+function displayedAt(createdAt) {
+	var milliSeconds = new Date() - createdAt;
+	var seconds = milliSeconds / 1000;
+	if(seconds < 60) 
+		return "방금전";
+	var minutes = seconds / 60;
+	if(minutes < 60) 
+		return Math.floor(minutes)+"분전";
+	var hours = minutes / 60;
+	if(hours < 24) 
+		return Math.floor(hours)+"시간전";
+	var days = hours / 24;
+	if(days < 7) 
+		return Math.floor(days)+"일전";
+	var weeks = days / 7;
+	if(weeks < 5) 
+		return Math.floor(weeks)+"주전";
+	else 
+		return formatDate(createdAt);
+}
+
+function formatDate(date) { 
+	var d = new Date(date), 
+		month = '' + (d.getMonth() + 1), 
+		day = '' + d.getDate(), 
+		year = d.getFullYear(); 
+	if (month.length < 2) month = '0' + month; 
+	if (day.length < 2) day = '0' + day; 
+	return year+"년"+month+"월"+day+"일"; 
+}
+
+
 </script>	
 	
 </head>
@@ -39,19 +88,19 @@ function list(page) {
 					<!-- 검색 -->
 					<form class="form-inline" name="form1" method="post" action="${path}/board/list">
 						<div class="input-group mt-3 mb-3" style="max-width:600px;">
-						  <div class="input-group-prepend">
-						    <select name="searchOption">
-								<!--  c:out태그에 삼항연산자 사용 -->
-								<option value="all" <c:out value="${map.searchOption == 'all'?'selected':''}"/>>제목+이름+제목</option>
-								<option value="writer" <c:out value="${map.searchOption == 'writer'?'selected':''}"/>>이름</option>
-								<option value="content" <c:out value="${map.searchOption == 'content'?'selected':''}"/>>내용</option>
-								<option value="title" <c:out value="${map.searchOption == 'title'?'selected':''}"/>>제목</option>
-							</select>
-						  </div>
-						  <input type="text" name="keyword" class="form-control" value="${map.keyword}">
-						    <div class="input-group-append">
-							    <input type="submit" class="btn btn-primary" value="조회">
-							 </div>
+							<div class="input-group">
+							  <select name="searchOption" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon" style="max-width:100px;">
+							    <!--  c:out태그에 삼항연산자 사용 -->
+							    <option value="all" <c:out value="${map.searchOption == 'all'?'selected':''}"/>>전체</option>
+							    <option value="writer" <c:out value="${map.searchOption == 'writer'?'selected':''}"/>>이름</option>
+							    <option value="content" <c:out value="${map.searchOption == 'content'?'selected':''}"/>>내용</option>
+							    <option value="title" <c:out value="${map.searchOption == 'title'?'selected':''}"/>>제목</option>
+							  </select>
+							
+							  <input type="text" name="keyword" class="form-control" value="${map.keyword}">
+							
+							  <input type="submit" class="btn btn-primary" value="조회">
+							</div>
 						</div>
 						
 					</form>
@@ -87,9 +136,9 @@ function list(page) {
 											<td>
 												<a href="${path}/board/view?bno=${row.bno}&curPage=${map.boardPager.curPage}
 													&searchOption=${map.searchOption}&keyword=${map.keyword}">
-													<div style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis; width:150px;">
-														${row.title}
-													</div>
+													<span style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis; width:150px;">
+														${row.title}&nbsp;&nbsp;
+													</span>
 													<!-- 댓글이 있으면 게시글 이름 옆에 댓글 수 출력 -->
 													<c:if test="${row.recnt > 0}">
 														<span style="color:red; font-size:17px;">
@@ -101,7 +150,7 @@ function list(page) {
 											</td>
 											<td style="word-break:break-all;">${row.writer}</td>
 											<td style="word-break:break-all;">${row.viewcnt}</td>
-											<td style="word-break:break-all;">
+											<td style="word-break:break-all;" class="boardDate">
 												<fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 											</td>
 										</tr>

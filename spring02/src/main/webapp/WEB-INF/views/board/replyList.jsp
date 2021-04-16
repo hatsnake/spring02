@@ -14,7 +14,11 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>  
-
+<style>
+.boardDate {
+	font-size: 0.9rem;
+}
+</style>
 <script>
 $(document).ready(function() {
 	
@@ -23,7 +27,49 @@ $(document).ready(function() {
 		//reply();
 	});
 
+	var boardDate = document.querySelectorAll(".boardDate");
+
+	for(var i = 0; i<boardDate.length; i++) {
+		var regdate = boardDate[i].innerText;
+		var createdAt = new Date(regdate);
+		var result = displayedAt(createdAt);
+
+		$(".boardDate:eq("+i+")").html(result);
+	}
+	
 });
+
+//시간측정
+function displayedAt(createdAt) {
+	var milliSeconds = new Date() - createdAt;
+	var seconds = milliSeconds / 1000;
+	if(seconds < 60) 
+		return "방금전";
+	var minutes = seconds / 60;
+	if(minutes < 60) 
+		return Math.floor(minutes)+"분전";
+	var hours = minutes / 60;
+	if(hours < 24) 
+		return Math.floor(hours)+"시간전";
+	var days = hours / 24;
+	if(days < 7) 
+		return Math.floor(days)+"일전";
+	var weeks = days / 7;
+	if(weeks < 5) 
+		return Math.floor(weeks)+"주전";
+	else 
+		return formatDate(createdAt);
+}
+
+function formatDate(date) { 
+	var d = new Date(date), 
+		month = '' + (d.getMonth() + 1), 
+		day = '' + d.getDate(), 
+		year = d.getFullYear(); 
+	if (month.length < 2) month = '0' + month; 
+	if (day.length < 2) day = '0' + day; 
+	return year+"년"+month+"월"+day+"일"; 
+}
 
 //댓글작성 2번째 (json 방식) *사용중
 function replyJson() {
@@ -106,12 +152,12 @@ $("#replyUpdate").on("click", function() {
 
 <!-- 댓글입력 -->
 <s:authorize access="isAuthenticated()">
-	<div style="padding:10px; background:gray; max-width:600px;">
-	  <div>
-	  	<span>하이</span>
+	<div style="padding:10px; background:#e2dcdc; max-width:600px;">
+	  <div style="padding-left:10px;">
+	  	<span>${username}</span>
 	  </div>
 	  <textarea class="form-control" id="replytext" placeholder="댓글을 작성해주세요" style="height: 100px"></textarea>
-	  <div>
+	  <div style="padding-left:10px;">
 	    <div class="form-check" style="float:left">
 		  <input class="form-check-input" type="checkbox" value="" id="secretReply">
 		  <label class="form-check-label" for="flexCheckDefault">
@@ -130,11 +176,11 @@ $("#replyUpdate").on("click", function() {
 		<div class="p-2"><span class="round"><img src="https://i.imgur.com/uIgDDDd.jpg" alt="user" width="50"></span></div>
 		<div class="comment-text w-100">
 			<h5>
-				<span style="font-size:10px;" class="label label-info">일반</span> 
+				<!-- <span style="font-size:10px;" class="label label-info">일반</span> --> 
 				${row.replyer}
 			</h5>
 			<div class="comment-footer"> 
-				<div class="date"><fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></div> 
+				<div class="date boardDate"><fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></div> 
 				 
 				<span class="action-icons"> 
 					<c:if test="${username == row.replyer}">

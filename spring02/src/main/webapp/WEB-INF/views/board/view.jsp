@@ -318,7 +318,7 @@ function deleteReply(rno) {
 								<div style="margin-left:5px;">
 									${dto.writer}&nbsp;
 									<span style="font-size:11px; color:gray;"><i class="far fa-clock"></i> 
-										<fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
+										<fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 									</span>
 								</div>
 			

@@ -120,6 +120,7 @@ public class ReplyController {
 			// 스프링 시큐리티 세션 아이디
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			username = user.getUsername();
+			mav.addObject("username", username);
 		}
 		
 		// 페이징 처리

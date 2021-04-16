@@ -17,6 +17,9 @@
 	body {
 		font-family: 'Nanum Gothic', sans-serif;
 	}
+	.dropdown-toggle::after {
+		content: none !important;
+	}
 </style>
 
 <script type="text/javascript">
@@ -71,9 +74,9 @@ $(document).ready(function(){
 		<!-- 로그인 상태 -->	
 		<s:authorize access="isAuthenticated()">
 		<div class="flex-shrink-0 dropdown">
-			<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+			<span href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
 				<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-			</a>
+			</span>
 			<ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
 				<li><a class="dropdown-item profile">내정보</a></li>
 				<li><a class="dropdown-item">설정</a></li>
