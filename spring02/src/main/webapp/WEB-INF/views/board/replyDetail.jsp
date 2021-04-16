@@ -58,6 +58,7 @@ $("#btnReplyDelete").on("click", function() {
 	}
 });
 </script>
+
 댓글 번호 : ${dto.rno}<br>
 <textarea id="detailReplytext" rows="5" cols="82">${dto.replytext}</textarea>
 <div style="text-align:center;">

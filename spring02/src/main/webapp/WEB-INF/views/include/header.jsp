@@ -1,39 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<title>ShareHappy</title>  
+  
+<style type="text/css">
+	.rounded-circle {
+		border: 2px solid lightgray !important;
+	}
+	.dropdown-menu[data-bs-popper] {
+		left: -126px;
+	}
+	#sidebar ul li.active>a, a[aria-expanded="true"]:not('.not') {
+		color: transparent !important;
+		background:transparent !important;
+	}
+
+	body {
+		font-family: 'Nanum Gothic', sans-serif;
+	}
+</style>
 
 <script type="text/javascript">
-//네비게이션 메뉴
-document.addEventListener("DOMContentLoaded", function(){
-	
-	el_autohide = document.querySelector('.autohide');
-	
-	// add padding-top to bady (if necessary)
-	navbar_height = document.querySelector('.navbar').offsetHeight;
-	document.body.style.paddingTop = navbar_height + 'px';
-
-	if(el_autohide){
-		
-		var last_scroll_top = 0;
-		window.addEventListener('scroll', function() {
-       		let scroll_top = window.scrollY;
-	       if(scroll_top < last_scroll_top) {
-	            el_autohide.classList.remove('scrolled-down');
-	            el_autohide.classList.add('scrolled-up');
-	        }
-	        else {
-	            el_autohide.classList.remove('scrolled-up');
-	            el_autohide.classList.add('scrolled-down');
-	        }
-	        last_scroll_top = scroll_top;
-
-		}); 
-		// window.addEventListener
-
-	}
-	// if
-	
-}); 
-// DOMContentLoaded  end
-
 //버튼 클릭 이동
 $(document).ready(function(){
 	$('.logout').on('click', function() {
@@ -55,70 +41,49 @@ $(document).ready(function(){
 });
 </script>
 
-<style type="text/css">
-.autohide{
-	position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1030;
-}
-.scrolled-down{
-	transform:translateY(-100%); transition: all 0.3s ease-in-out;
-}
-.scrolled-up{
-	transform:translateY(0); transition: all 0.3s ease-in-out;
-}
-.dropdown-toggle::after {
-	content: none !important;
-
-}
-.rounded-circle {
-	border: 2px solid lightgray !important;
-}
-.dropdown-menu[data-bs-popper] {
-	left: -126px;
-}
-</style>
-
-<!-- ============= COMPONENT ============== -->
-<nav class="autohide navbar navbar-expand-lg" style="box-shadow:1px 1px 1px #e8dada; background:white;">
- <div class="container" style="max-width: 960px">
- 	<a class="navbar-brand" href="/">개드립</a>
- 	
- 	<a class="navbar-brand" href="/board/list">리스트</a>
-    
-    <!-- 비로그인 상태 -->
-    <s:authorize access="isAnonymous()">
-    	<div class="flex-shrink-0">
-			<button type="button" class="btn btn-success login">로그인</button>
-			<!-- <button type="button" class="btn btn-default join">회원가입</button> -->
-		</div>
-	</s:authorize>
+<header class="navbar navbar-expand-lg navbar-light" style="background: #ffc107;">
+	<div class="container">
 	
-	<!-- 관리자 로그인 상태 -->
-    <s:authorize access="hasRole('admin')">
-		관리자 로그인
-	</s:authorize>
+		<button type="button" id="sidebarCollapse" class="btn" style="background:#a1a0e8;">
+			<i class="fas fa-align-left"></i>
+		</button>
 
-    <!-- 로그인 상태 -->	
-    <s:authorize access="isAuthenticated()">
+		<a href="/">
+			<div style="font-size:2rem; margin-left:1rem;">
+				S<span style="font-size:0.5em;">hare</span>
+				H<span style="font-size:0.5em;">appy</span>
+			</div>
+		</a>
+
+	    <!-- 비로그인 상태 -->
+	    <s:authorize access="isAnonymous()">
+	    	<div class="flex-shrink-0">
+				<button type="button" class="btn btn-success login">로그인</button>
+				<!-- <button type="button" class="btn btn-default join">회원가입</button> -->
+			</div>
+		</s:authorize>
+		
+		<!-- 관리자 로그인 상태 -->
+	    <s:authorize access="hasRole('admin')">
+			관리자 로그인
+		</s:authorize>		
+
+		<!-- 로그인 상태 -->	
+		<s:authorize access="isAuthenticated()">
 		<div class="flex-shrink-0 dropdown">
-	        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-	          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-	        </a>
-	        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-	          <li><a class="dropdown-item profile">내정보</a></li>
-	          <li><a class="dropdown-item">설정</a></li>
-	          <li><hr class="dropdown-divider"></li>
-	          <li>
-	          	<a class="dropdown-item logout">로그아웃</a>
-	          </li>
-	        </ul>
-     	</div>
-     </s:authorize>
- </div> <!-- container-fluid.// -->
-</nav>
-<!-- ============= COMPONENT END// ============== -->   
-
+			<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+				<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+			</a>
+			<ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+				<li><a class="dropdown-item profile">내정보</a></li>
+				<li><a class="dropdown-item">설정</a></li>
+				<li><hr class="dropdown-divider"></li>
+				<li>
+					<a class="dropdown-item logout">로그아웃</a>
+				</li>
+			</ul>
+		</div>
+		</s:authorize>
+		
+	</div>
+</header>

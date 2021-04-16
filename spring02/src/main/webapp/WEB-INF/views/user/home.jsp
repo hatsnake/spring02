@@ -1,125 +1,206 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<!DOCTYPE html>
 <html>
+
 <head>
-<title>메인 화면</title>
-
 <%@ include file="../include/util.jsp" %>
-
 <style type="text/css">
-	.shadow-my {
-		box-shadow: 1px 1px 5px #c3c2c2;
+	.card-list:hover {
+		background: #f5f3f3;
 	}
 </style>
-
 </head>
-<body>
 
-	<%@ include file="../include/header.jsp" %>
-	
-	<!-- 리스트1 -->
-	<div class="container" style="max-width: 960px">
-		
-		<div class="my-5 p-3 bg-body rounded shadow-my">
-		    <h6 class="border-bottom pb-2 mb-0">최신글</h6>
-		
-		    <div class="d-flex text-muted pt-3">
-				<div class="pb-3 mb-0 small lh-sm border-bottom" style="width:100%;">
-					<strong class="d-block text-gray-dark" style="margin-left:8px;">작성한 글 <span style="font-size:11px; color:blue;">10</span></strong>
-					<span style="margin-left:8px; font-size:6px;">작성자</span>
+<body>
+    <div class="wrapper">
+    	<%@ include file="../include/sidebar.jsp" %>
+
+        <!-- Page Content  -->
+        <div id="content">
+			<%@ include file="../include/header.jsp" %>
+					
+			<div class="container">
+
+				<!-- 글목록 1 -->
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">최신글</h4>
+						<p class="card-text">
+							
+							<div class="line" style="margin: 0 !important;"></div>
+							
+							<div class="card card-list" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;">
+												<i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+									
+								</div>
+							</div>
+
+							<div class="line" style="margin: 0 !important;"></div>
+
+							<div class="card card-list" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="line" style="margin: 0 !important;"></div>
+
+							<div class="card card-list" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+								</div>
+							</div>	
+
+							<div class="line" style="margin: 0 !important;"></div>
+
+							<div class="card card-list" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="line" style="margin: 0 !important;"></div>
+
+							<div class="card card-list" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="line" style="margin: 0 !important;"></div>
+
+						</p>
+						<div class="float-right">
+							<a href="#" class="card-link" style="float:right;">더보기</a>
+						</div>
+					</div>
 				</div>
-		    </div>
-		    
-		    <div class="d-flex text-muted pt-3">
-				<div class="pb-3 mb-0 small lh-sm border-bottom" style="width:100%;">
-					<strong class="d-block text-gray-dark" style="margin-left:8px;">작성한 글 <span style="font-size:11px; color:blue;">10</span></strong>
-					<span style="margin-left:8px; font-size:6px;">작성자</span>
+
+				<div class="line"></div>
+
+				<!-- 글목록 2 -->
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">인기글</h4>
+						<p class="card-text">
+							
+							<div class="line" style="margin: 0 !important;"></div>
+
+							<div class="card" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+									
+								</div>
+							</div>
+
+							<div class="line" style="margin: 0 !important;"></div>
+
+							<div class="card" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="line" style="margin: 0 !important;"></div>
+
+							<div class="card" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+								</div>
+							</div>	
+
+							<div class="line" style="margin: 0 !important;"></div>
+
+							<div class="card" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="line" style="margin: 0 !important;"></div>
+
+							<div class="card" style="border: none !important;">
+								<div class="card-body" style="padding:0px !important; ">
+									<div class="card-title" style="margin:10px;">
+											재밌는 글 1 &nbsp;
+											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
+												10
+											</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="line" style="margin: 0 !important;"></div>
+
+						</p>
+						<div class="float-right">
+							<a href="#" class="card-link" style="float:right;">더보기</a>
+						</div>
+					</div>
 				</div>
-		    </div>
-	
-		    <div class="d-flex text-muted pt-3">
-				<div class="pb-3 mb-0 small lh-sm border-bottom" style="width:100%;">
-					<strong class="d-block text-gray-dark" style="margin-left:8px;">작성한 글 <span style="font-size:11px; color:blue;">10</span></strong>
-					<span style="margin-left:8px; font-size:6px;">작성자</span>
-				</div>
-		    </div>		    		    
-		
-		    <small class="d-block text-end mt-3">
-		      <a href="#">전체보기</a>
-		    </small>
-	  	</div>
-	
-	</div><!-- container //  -->
-	
-	<!-- 리스트2 -->
-	<div class="container" style="max-width: 960px">
-	
-		<div class="my-5 p-3 bg-body rounded shadow-my">
-		    <h6 class="border-bottom pb-2 mb-0">최신글</h6>
-		
-		    <div class="d-flex text-muted pt-3">
-				<div class="pb-3 mb-0 small lh-sm border-bottom" style="width:100%;">
-					<strong class="d-block text-gray-dark" style="margin-left:8px;">작성한 글 <span style="font-size:11px; color:blue;">10</span></strong>
-					<span style="margin-left:8px; font-size:6px;">작성자</span>
-				</div>
-		    </div>
-		    
-		    <div class="d-flex text-muted pt-3">
-				<div class="pb-3 mb-0 small lh-sm border-bottom" style="width:100%;">
-					<strong class="d-block text-gray-dark" style="margin-left:8px;">작성한 글 <span style="font-size:11px; color:blue;">10</span></strong>
-					<span style="margin-left:8px; font-size:6px;">작성자</span>
-				</div>
-		    </div>
-	
-		    <div class="d-flex text-muted pt-3">
-				<div class="pb-3 mb-0 small lh-sm border-bottom" style="width:100%;">
-					<strong class="d-block text-gray-dark" style="margin-left:8px;">작성한 글 <span style="font-size:11px; color:blue;">10</span></strong>
-					<span style="margin-left:8px; font-size:6px;">작성자</span>
-				</div>
-		    </div>		    		    
-		
-		    <small class="d-block text-end mt-3">
-		      <a href="#">전체보기</a>
-		    </small>
-	  	</div>
-	
-	</div><!-- container //  -->
-	
-	<!-- 리스트3 -->
-	<div class="container" style="max-width: 960px">
-	
-		<div class="my-5 p-3 bg-body rounded shadow-my">
-		    <h6 class="border-bottom pb-2 mb-0">최신글</h6>
-		
-		    <div class="d-flex text-muted pt-3">
-				<div class="pb-3 mb-0 small lh-sm border-bottom" style="width:100%;">
-					<strong class="d-block text-gray-dark" style="margin-left:8px;">작성한 글 <span style="font-size:11px; color:blue;">10</span></strong>
-					<span style="margin-left:8px; font-size:6px;">작성자</span>
-				</div>
-		    </div>
-		    
-		    <div class="d-flex text-muted pt-3">
-				<div class="pb-3 mb-0 small lh-sm border-bottom" style="width:100%;">
-					<strong class="d-block text-gray-dark" style="margin-left:8px;">작성한 글 <span style="font-size:11px; color:blue;">10</span></strong>
-					<span style="margin-left:8px; font-size:6px;">작성자</span>
-				</div>
-		    </div>
-	
-		    <div class="d-flex text-muted pt-3">
-				<div class="pb-3 mb-0 small lh-sm border-bottom" style="width:100%;">
-					<strong class="d-block text-gray-dark" style="margin-left:8px;">작성한 글 <span style="font-size:11px; color:blue;">10</span></strong>
-					<span style="margin-left:8px; font-size:6px;">작성자</span>
-				</div>
-		    </div>		    		    
-		
-		    <small class="d-block text-end mt-3">
-		      <a href="#">전체보기</a>
-		    </small>
-	  	</div>
-	
-	</div><!-- container //  -->
-	
-	<%@ include file="../include/footer.jsp" %>
+
+				<div class="line"></div>
+
+			</div>
+
+
+			<%@ include file="../include/footer.jsp" %>
+
+        </div>
+
+
+    </div>
+
+    <div class="overlay"></div>
 
 </body>
+
 </html>

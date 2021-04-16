@@ -1,6 +1,7 @@
 package com.hatsnake.spring02.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -112,7 +112,7 @@ public class ReplyController {
 		String username = null;
 		
 		if(principal != null) {
-		// 스프링 시큐리티 세션 아이디
+			// 스프링 시큐리티 세션 아이디
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			username = user.getUsername();
 		}
@@ -126,13 +126,16 @@ public class ReplyController {
 		
 		mav.setViewName("board/replyList");
 		mav.addObject("list", list);
+		mav.addObject("replyCount", count);
 		mav.addObject("replyPager", replyPager);
 		mav.addObject("username", username);
+		mav.addObject("bno", bno);
 		
 		return mav;
 	}
 	
-	//댓글 상세 보기 (Rest방식)
+	//댓글 상세 보기 (페이지방식, Rest방식)
+	/*
 	@RequestMapping(value="/detail/{rno}", method=RequestMethod.GET)
 	public ModelAndView replyDetail(@PathVariable("rno") Integer rno, ModelAndView  mav) {
 		ReplyDTO dto = replyService.detail(rno);
@@ -140,6 +143,19 @@ public class ReplyController {
 		mav.addObject("dto", dto);
 		
 		return mav;
+	}
+	*/
+	
+	//댓글 상세보기 (모달방식)
+	@RequestMapping(value="/detail/{rno}", method=RequestMethod.GET)
+	public HashMap<String, Object> replyDetail(@PathVariable("rno") Integer rno) {
+		HashMap<String, Object> replyData = new HashMap<String, Object>();
+		ReplyDTO dto = replyService.detail(rno);
+		
+		replyData.put("rno", dto.getRno());
+		replyData.put("replytext", dto.getReplytext());
+		
+		return replyData;
 	}
 	
 	//댓글 수정 처리 - PUT:전체 수정, PATCH:일부수정

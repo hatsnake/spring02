@@ -1,21 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<!DOCTYPE html>
 <html>
+
 <head>
-<title>메인 화면</title>
+<%@ include file="../include/util.jsp" %>
+<link rel="stylesheet" href="/resources/css/formsign.css">
 
 <style type="text/css">
-
+.form-signin {
+	max-width: 760px !important;
+}
 </style>
-
-<%@ include file="../include/util.jsp" %>
 
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".writeCheck").click(function() {
-		var title = $("#title").val();
-		var content = $("#content").val();
-		var writer = $("#writer").val();
+		var title = $(".title").val();
+		var content = $(".content").val();
+		var writer = $(".writer").val();
+		console.log(title+", "+content+", "+writer);
 		if(title == "") {
 			alert("제목을 입력해주세요");
 			document.form1.title.focus();
@@ -27,7 +31,7 @@ $(document).ready(function() {
 			return;
 		}
 		if(writer == "") {
-			alert("이름을 입력해주세요");
+			alert("로그인이 필요합니다");
 			return;
 		}	
 		document.form1.submit();			
@@ -36,33 +40,53 @@ $(document).ready(function() {
 </script>
 
 </head>
+
 <body>
 
-	<%@ include file="../include/header.jsp" %>
-	
-	<h2>게시글 작성</h2>
-	<form name="form1" method="post" action="${path}/board/insert">
-		<div>
-			제목 : <input type="text" name="title" id="title" size="80" placeholder="제목을 입력해주세요">
-		</div>
+    <div class="wrapper">
+		<%@ include file="../include/sidebar.jsp" %>
+
+        <!-- Page Content  -->
+        <div id="content">
+			<%@ include file="../include/header.jsp" %>
 		
-		<div>
-			내용 : <textarea name="content" id="content" rows="4" cols="80" placeholder="제목을 입력해주세요"></textarea>
-		</div>
-		
-		<div>
-			이름 : ${username}
-			<input type="hidden" name="writer" id="writer" value="${username}">
-		</div>
-		<div style="width:650px; text-align:center;">
-			<button type="button" class="writeCheck">등록</button>
-			<button type="reset">취소</button>
-		</div>
+			<div class="container" style="margin: 10.5rem auto;">
+				<main class="form-signin">
+					<form name="form1" method="post" action="${path}/board/insert">
+						<!--  
+							<img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+						-->
+						<h1 class="h3 mb-3 fw-normal text-center">게시글 등록</h1>
+						<!--
+							<span style="color:red;">${errMsg}</span>
+						-->
+				
+						<div class="mb-3">
+							<label for="exampleFormControlInput1" class="form-label">게시글 제목</label>
+							<input type="text" name="title" class="title form-control" size="80" placeholder="게시글 제목">
+						</div>
+						<div class="mb-3">
+							<label for="exampleFormControlInput1" class="form-label">글쓴이</label><br>
+							<span style="margin-left:5px;">${username}</span>
+							<input type="hidden" name="writer" class="writer" value="${username}">
+						</div>
+						<div class="mb-3">
+							<label for="exampleFormControlTextarea1" class="form-label">게시글 내용</label>
+							<textarea name="content" class="content form-control" rows="4" cols="80" placeholder="게시글 내용"></textarea>
+						</div>
 						
-	</form>
-	
-	
-	<%@ include file="../include/footer.jsp" %>
+						<button class="w-100 btn btn-md btn-secondary mb-2 writeCheck" type="button">게시글 등록</button> 
+						<button class="w-100 btn btn-md btn-secondary" type="reset">취소</button> 							
+						<p class="mt-4 mb-3 text-muted"></p>
+					</form>
+				</main>
+			</div>
+
+			<%@ include file="../include/footer.jsp" %>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
 
 </body>
-</html>	
+</html>
