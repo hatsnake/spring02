@@ -139,6 +139,12 @@
     		<version>1.3.2</version>
 		</dependency>
 
+		<!-- AOP -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.9</version>
+		</dependency>
 				
 		<!-- AspectJ -->
 		<dependency>
