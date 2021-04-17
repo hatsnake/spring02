@@ -55,12 +55,12 @@
 	    <remember-me key="userKey" token-validity-seconds="86400" />
     </http>
     
-    <beans:bean id="userDeniedHandler" class="com.hatsnake.spring02.service.UserDeniedHandler" />
-    <beans:bean id="userLoginSuccessHandler" class="com.hatsnake.spring02.service.UserLoginSuccessHandler" />
-    <beans:bean id="userLoginFailureHandler" class="com.hatsnake.spring02.service.UserLoginFailureHandler" />
+    <beans:bean id="userDeniedHandler" class="com.hatsnake.spring02.common.security.UserDeniedHandler" />
+    <beans:bean id="userLoginSuccessHandler" class="com.hatsnake.spring02.common.security.UserLoginSuccessHandler" />
+    <beans:bean id="userLoginFailureHandler" class="com.hatsnake.spring02.common.security.UserLoginFailureHandler" />
  
     <!-- 로그인 인증을 처리하는 빈 -->
-    <beans:bean id="userService" class="com.hatsnake.spring02.service.UserAuthenticationService">
+    <beans:bean id="userService" class="com.hatsnake.spring02.common.security.UserAuthenticationService">
         <beans:constructor-arg name="sqlSession" ref="sqlSession" />
     </beans:bean>
     

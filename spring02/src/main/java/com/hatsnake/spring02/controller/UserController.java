@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hatsnake.spring02.common.security.ShaEncoder;
 import com.hatsnake.spring02.dao.UserDAO;
-import com.hatsnake.spring02.service.ShaEncoder;
 
 @Controller
 public class UserController {

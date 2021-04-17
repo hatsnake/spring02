@@ -1,4 +1,4 @@
-package com.hatsnake.spring02.service;
+package com.hatsnake.spring02.common.security;
 
 import javax.annotation.Resource;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;

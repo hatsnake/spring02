@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="s"%>    
 <title>ShareHappy</title>  
   
 <style type="text/css">
@@ -44,7 +45,7 @@ $(document).ready(function(){
 });
 </script>
 
-<header class="navbar navbar-expand-lg navbar-light" style="background: #ffc107;">
+<header class="navbar navbar-expand-lg navbar-light" style="background: #7386D5;">
 	<div class="container">
 	
 		<button type="button" id="sidebarCollapse" class="btn" style="background:#a1a0e8;">
@@ -78,6 +79,9 @@ $(document).ready(function(){
 				<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
 			</span>
 			<ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+				<s:authentication property="principal" var="user"/>
+				<li><span class="dropdown-item">${user.username}</a></li>
+				<li><hr class="dropdown-divider"></li>
 				<li><a class="dropdown-item profile">내정보</a></li>
 				<li><a class="dropdown-item">설정</a></li>
 				<li><hr class="dropdown-divider"></li>
