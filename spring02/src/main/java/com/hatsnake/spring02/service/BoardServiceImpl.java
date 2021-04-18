@@ -6,13 +6,14 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hatsnake.spring02.dao.BoardDAO;
 import com.hatsnake.spring02.domain.BoardDTO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-
+	
 	@Inject
 	private BoardDAO boardDao;
 
@@ -84,18 +85,46 @@ public class BoardServiceImpl implements BoardService {
 		dto.setContent(content);
 		dto.setWriter(writer);
 		boardDao.create(dto);
+		
+		//게시물의 첨부파일 정보 등록
+		String[] files = dto.getFiles(); //첨부파일 배열
+		if(files == null) return; //첨부파일이 없으면 메소드 종료
+		//첨부파일들의 정보를 attach_board테이블에 insert
+		for(String name : files) {
+			System.out.println(name);
+			boardDao.addAttach(name);
+		}
 	}
 
 	//게시글 수정
+	@Transactional
 	@Override
 	public void update(BoardDTO dto) throws Exception {
 		boardDao.update(dto);
+		//첨부파일 정보 등록
+		String[] files = dto.getFiles(); //첨부파일 배열
+		//첨부파일이 없으면 종료
+		if(files == null) return;
+		//첨부파일들의 정보를 attach_board 테이블에 insert
+		for(String name : files) {
+			boardDao.updateAttach(name, dto.getBno());
+		}
 	}
 
 	//게시글 삭제
 	@Override
 	public void delete(int bno) throws Exception {
 		boardDao.delete(bno);
+	}
+
+	@Override
+	public List<String> getAttach(int bno) {
+		return boardDao.getAttach(bno);
+	}
+
+	@Override
+	public void deleteFile(String fullname) {
+		boardDao.deleteFile(fullname);
 	}
 
 }

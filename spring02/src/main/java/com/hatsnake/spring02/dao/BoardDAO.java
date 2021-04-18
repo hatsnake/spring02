@@ -19,5 +19,13 @@ public interface BoardDAO {
 	public void delete(int bno) throws Exception;
 
 	public void update(BoardDTO dto) throws Exception;
+	
+	public void addAttach(String fullName);
+	
+	public List<String> getAttach(int bno);
+	
+	public void updateAttach(String fullName, int bno);
+	
+	public void deleteFile(String fullname);
 
 }

@@ -25,4 +25,7 @@ public interface BoardService {
 
 	public int countArticle(String searchOption, String keyword) throws Exception;
 
+	public List<String> getAttach(int bno);
+	
+	public void deleteFile(String fullname);
 }

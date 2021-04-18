@@ -11,15 +11,25 @@
 .form-signin {
 	max-width: 760px !important;
 }
+
+.fileDrop {
+	max-width: 600px;
+	height: 70px;
+	border: 2px dotted gray;
+	background-color: gray;
+}
 </style>
+
+<script type="text/javascript" src="/resources/js/common.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	$(".writeCheck").click(function() {
 		var title = $(".title").val();
 		var content = $(".content").val();
 		var writer = $(".writer").val();
-		console.log(title+", "+content+", "+writer);
+		
 		if(title == "") {
 			alert("제목을 입력해주세요");
 			document.form1.title.focus();
@@ -36,6 +46,52 @@ $(document).ready(function() {
 		}	
 		document.form1.submit();			
 	});	
+
+	//드래그 관련 기본효과 방지
+	$(".fileDrop").on("dragenter dragover", function(e) {
+		e.preventDefault(); //기본효과를 막음
+	});
+
+	//드롭시 효과
+	//event : jQuery의 이벤트
+	//originalEvent : javascript의 이벤트
+	$(".fileDrop").on("drop", function(e) {
+		e.preventDefault(); //기본효과를 막음
+		//드래그된 파일의 정보
+		var files = e.originalEvent.dataTransfer.files;
+		//첫번째 파일
+		var file = files[0];
+
+		//ajax로 전달할 폼 객체
+		var formData = new FormData();
+		//폼 객체에 파일추가, append("변수명", 값)
+		formData.append("file", file);
+
+		$.ajax({
+			url: "${path}/upload/uploadAjax",
+			type: "post",
+			data: formData,
+			//processData: true => get방식, false => post방식
+			dataType: "text",
+			//contentType: true => application/x-www-form-urlencoded,
+			//             false => multipart/form-data
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				console.log(data);
+				//첨부 파일의 정보
+				var fileInfo = getFileInfo(data);
+				//하이퍼링크
+				var html = "<a href='"+fileInfo.getLink+"'>"+fileInfo.fileName+"</a><br>";
+				//hidden 태그 추가
+				html += "<input type='hidden' name='files' class='file' value='"+fileInfo.fullName+"'>";
+				// div에 추가
+				$("#uploadedList").append(html);
+
+			}
+		});
+	});
+	
 });
 </script>
 
@@ -52,7 +108,7 @@ $(document).ready(function() {
 		
 			<div class="container" style="margin: 10.5rem auto;">
 				<main class="form-signin">
-					<form name="form1" method="post" action="${path}/board/insert">
+					<form name="form1" method="post" action="${path}/board/insert" enctype="multipart/form-data">
 						<!--  
 							<img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
 						-->
@@ -74,6 +130,10 @@ $(document).ready(function() {
 							<label for="exampleFormControlTextarea1" class="form-label">게시글 내용</label>
 							<textarea name="content" class="content form-control" rows="4" cols="80" placeholder="게시글 내용"></textarea>
 						</div>
+						
+						<!-- 파일 업로드 부분 -->
+						<div class="fileDrop"></div>
+						<div id="uploadedList"></div>
 						
 						<button class="w-100 btn btn-md btn-secondary mb-2 writeCheck" type="button">게시글 등록</button> 
 						<button class="w-100 btn btn-md btn-secondary" type="reset">취소</button> 							

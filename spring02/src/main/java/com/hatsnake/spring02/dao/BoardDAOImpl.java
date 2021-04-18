@@ -77,4 +77,31 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.update("board.updateArticle", dto);
 	}
 
+	//게시글 첨부파일 추가
+	@Override
+	public void addAttach(String fullname) {
+		sqlSession.insert("board.addAttach", fullname);
+	}
+
+	//게시글 첨부파일 목록
+	@Override
+	public List<String> getAttach(int bno) {
+		return sqlSession.selectList("board.getAttach", bno);
+	}
+
+	//게시글 첨부파일 수정
+	@Override
+	public void updateAttach(String fullname, int bno) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("fullname", fullname);
+		map.put("bno", bno);
+		sqlSession.insert("board.updateAttach", map);
+	}
+
+	//게시글 첨부파일 삭제
+	@Override
+	public void deleteFile(String fullname) {
+		sqlSession.delete("board.deleteAttach", fullname);
+	}
+
 }

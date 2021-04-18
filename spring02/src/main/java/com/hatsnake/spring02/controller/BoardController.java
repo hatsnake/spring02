@@ -15,9 +15,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hatsnake.spring02.domain.BoardDTO;
@@ -81,6 +83,13 @@ public class BoardController {
 		boardService.create(dto);
 		
 		return "redirect:/board/list";
+	}
+
+	//게시글 첨부파일 목록
+	@ResponseBody
+	@RequestMapping("/getAttach/{bno}")
+	public List<String> getAttach(@PathVariable("bno") int bno) {
+		return boardService.getAttach(bno);
 	}
 	
 	//게시글 상세조회, 조회수 증가 처리

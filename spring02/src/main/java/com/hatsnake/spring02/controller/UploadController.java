@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -24,10 +25,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hatsnake.spring02.common.upload.MediaUtils;
 import com.hatsnake.spring02.common.upload.UploadFileUtils;
+import com.hatsnake.spring02.service.BoardService;
 
 
 @Controller
 public class UploadController {
+	
+	@Inject
+	private BoardService boardService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 	
@@ -165,6 +170,9 @@ public class UploadController {
 		}
 		//원본 파일 삭제
 		new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
+		
+		//레코드 삭제
+		boardService.deleteFile(fileName);
 		
 		//데이터와 http 상태 코드 전송
 		return new ResponseEntity<String>("deleted", HttpStatus.OK);

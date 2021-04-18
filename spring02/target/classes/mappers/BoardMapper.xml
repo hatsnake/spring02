@@ -50,10 +50,30 @@
 	 <!-- 게시글 작성 -->
 	 <insert id="insert">
 	 	insert into board (bno, title, content, writer, show) 
-	 	values ((select nvl(max(bno)+1, 1) from board),
-	 		#{title}, #{content}, #{writer}, 'y'
-	 	)
+	 	values (seq_board.NEXTVAL, #{title}, #{content}, #{writer}, 'y')
 	 </insert>
+	 
+	 <!-- 게시글 첨부파일 목록 -->
+	 <select id="getAttach" resultType="string">
+	 	select * from attach_board where bno = #{bno}
+	 </select>
+	 
+	 <!-- 게시글 첨부파일 추가 -->
+	 <insert id="addAttach">
+	 	insert into attach_board (fullname, bno)
+	 	values (#{fullname}, seq_board.CURRVAL)
+	 </insert>
+	 
+	 <!-- 게시글 첨부파일 업데이트처리(입력처리) -->
+	 <insert id="updateAttach">
+	 	insert into attach_board (fullname, bno)
+	 	values (#{fullname}, #{bno})
+	 </insert>
+	 
+	 <!-- 게시글 첨부파일 삭제처리 -->
+	 <delete id="deleteAttach">
+	 	delete from attach_board where fullname = #{fullname}
+	 </delete>
 	
 	 <!-- 게시글 상세보기 조회 -->
 	 <select id="view" resultType="com.hatsnake.spring02.domain.BoardDTO">
