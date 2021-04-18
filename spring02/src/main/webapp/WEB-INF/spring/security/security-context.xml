@@ -13,6 +13,7 @@
 
     <!-- 정적 리소스 파일들에는 보안 설정을 하지 않음 -->
     <http pattern="/include/**" security="none" />
+    <http pattern="/resources/**" security="none" />
     
     <http auto-config="true" use-expressions="true" create-session="never">
 	    <!-- 관리자 영역 설정 -->

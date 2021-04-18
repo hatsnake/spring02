@@ -7,7 +7,7 @@
  	<!-- 댓글 입력 -->
  	<insert id="insertReply">
  		insert into reply (rno, bno, replytext, replyer, regdate, updatedate, secretReply, writer)
- 		values (reply_seq.nextval, #{bno, jdbcType=VARCHAR}, #{replytext, jdbcType=VARCHAR}, #{replyer, jdbcType=VARCHAR}, sysdate, sysdate, #{secretReply, jdbcType=VARCHAR}, #{writer, jdbcType=VARCHAR})
+ 		values (seq_reply.nextval, #{bno, jdbcType=VARCHAR}, #{replytext, jdbcType=VARCHAR}, #{replyer, jdbcType=VARCHAR}, sysdate, sysdate, #{secretReply, jdbcType=VARCHAR}, #{writer, jdbcType=VARCHAR})
  	</insert>
  	
  	<!-- 댓글 목록 -->
