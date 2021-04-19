@@ -18,6 +18,10 @@
 	border: 2px dotted gray;
 	background-color: gray;
 }
+.img-size {
+	max-width:80px;
+	max-height:80px;
+}
 </style>
 
 <script type="text/javascript" src="/resources/js/common.js"></script>
@@ -82,9 +86,10 @@ $(document).ready(function() {
 				//첨부 파일의 정보
 				var fileInfo = getFileInfo(data);
 				//하이퍼링크
-				var html = "<a href='"+fileInfo.getLink+"'>"+fileInfo.fileName+"</a><br>";
+				var html = "<div class='m-2'><img class='img-size' src='"+fileInfo.getLink+"'>&nbsp;&nbsp;";
+				html += "<a href='"+fileInfo.getLink+"'>"+fileInfo.fileName+"</a><br>";
 				//hidden 태그 추가
-				html += "<input type='hidden' name='files' class='file' value='"+fileInfo.fullName+"'>";
+				html += "<input type='hidden' name='files' class='file' value='"+fileInfo.fullName+"'></div>";
 				// div에 추가
 				$("#uploadedList").append(html);
 

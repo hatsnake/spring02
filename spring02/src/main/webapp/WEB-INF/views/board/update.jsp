@@ -16,6 +16,10 @@
 	border:1px solid gray;
 	background-color:gray;
 }
+.img-size {
+	max-width:80px;
+	max-height:80px;
+}
 </style>
 
 <script type="text/javascript" src="/resources/js/common.js"></script>
@@ -128,7 +132,8 @@ function listAttach() {
 				//each문 내부의 this : 각 step에 해당되는 값을 의미
 				var fileInfo = getFileInfo(this);
 				//a태그안에는 파일의 링크를 걸어주고, 목록에는 파일의 이름 출력
-				var html = "<div><a href='"+fileInfo.getLink+"'>"+fileInfo.fileName+"</a>&nbsp;&nbsp;";
+				var html = "<div class='m-2'><img class='img-size' src='"+fileInfo.getLink+"'>&nbsp;&nbsp;";
+				html += "<a href='"+fileInfo.getLink+"'>"+fileInfo.fileName+"</a>&nbsp;&nbsp;";
 				//삭제 버튼
 				html += "<a href='#' class='fileDel' data-src='"+this+"'>[삭제]</a></div>";
 				$("#uploadedList").append(html);

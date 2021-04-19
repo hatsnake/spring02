@@ -91,11 +91,16 @@
 		line-height: 1.5em !important;
 		color: #93939a;
 	}
+	.img-size {
+		width:100%;
+	}
 </style>
+
+<script type="text/javascript" src="/resources/js/common.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-
+	
 	listReplyRest('1');
 	//listReply2();
 
@@ -105,6 +110,27 @@ $(document).ready(function() {
 		//reply();
 	});
 	*/
+
+	//첨부파일 목록 불러오기 함수 호출
+	listAttach();
+
+	//첨부파일 목록 ajax요청 처리
+	function listAttach() {
+		$.ajax({
+			type: "post",
+			url: "${path}/board/getAttach/${dto.bno}",
+			success: function(list) {
+				console.log(list);
+				$(list).each(function(){
+					//each문 내부의 this : 각 step에 해당되는 값을 의미
+					var fileInfo = getFileInfo(this);
+					//a태그안에는 파일의 링크를 걸어주고, 목록에는 파일의 이름 출력
+					var html = "<div class='mb-1'><img class='img-size' src='"+fileInfo.getLink+"'></div>";
+					$("#uploadedList").append(html);
+				});
+			}
+		});
+	}
 
 	//게시글 삭제
 	$(".delete").on("click", function() {
@@ -328,8 +354,13 @@ function deleteReply(rno) {
 								</div>
 			
 								<!-- 내용 -->
-								<div style="margin-left:5px; margin-bottom: 20px;">
+								<div style="margin-left:5px; margin-bottom: 5px;">
 									${dto.content}
+								</div>
+								
+								<!-- 이미지 -->
+								<div style="margin-left:5px; margin-bottom: 5px;">
+									<div id="uploadedList"></div>
 								</div>
 								
 								<input type="hidden" name="bno" id="bno" value="${dto.bno}">
@@ -352,11 +383,8 @@ function deleteReply(rno) {
 						<div class="row" style="width:100% !important;">
 							<div class="col-md-12">
 								<div class="card" style="border:none !important;">
-								
-				
 									<!-- 댓글 목록 출력할 위치 -->
-									<div id="listReply" class="comment-widgets m-b-20"></div>
-									
+									<div id="listReply" class="comment-widgets m-b-20"></div>								
 								</div>
 							</div>
 						</div>
