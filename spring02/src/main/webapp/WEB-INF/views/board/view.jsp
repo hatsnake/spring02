@@ -120,13 +120,15 @@ $(document).ready(function() {
 			type: "post",
 			url: "${path}/board/getAttach/${dto.bno}",
 			success: function(list) {
-				console.log(list);
 				$(list).each(function(){
 					//each문 내부의 this : 각 step에 해당되는 값을 의미
 					var fileInfo = getFileInfo(this);
-					//a태그안에는 파일의 링크를 걸어주고, 목록에는 파일의 이름 출력
-					var html = "<div class='mb-1'><img class='img-size' src='"+fileInfo.getLink+"'></div>";
-					$("#uploadedList").append(html);
+
+					if(checkImageType(this)) {
+						//a태그안에는 파일의 링크를 걸어주고, 목록에는 파일의 이름 출력
+						var html = "<div class='m-2'><img class='img-size' src='"+fileInfo.getLink+"'></div>";
+						$("#uploadedList").append(html);
+					}
 				});
 			}
 		});

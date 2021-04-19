@@ -82,17 +82,24 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false,
 			success: function(data) {
-				console.log(data);
+				
 				//첨부 파일의 정보
 				var fileInfo = getFileInfo(data);
-				//하이퍼링크
-				var html = "<div class='m-2'><img class='img-size' src='"+fileInfo.getLink+"'>&nbsp;&nbsp;";
-				html += "<a href='"+fileInfo.getLink+"'>"+fileInfo.fileName+"</a><br>";
-				//hidden 태그 추가
-				html += "<input type='hidden' name='files' class='file' value='"+fileInfo.fullName+"'></div>";
+
+				if(checkImageType(data)) {
+					//하이퍼링크
+					var html = "<div class='m-2'><img class='img-size' src='"+fileInfo.getLink+"'>&nbsp;&nbsp;";
+					html += "<a href='"+fileInfo.getLink+"'>"+fileInfo.fileName+"</a><br>";
+					//hidden 태그 추가
+					html += "<input type='hidden' name='files' class='file' value='"+fileInfo.fullName+"'></div>";
+				} else {
+					//하이퍼링크
+					var html = "<div class='m-2'><a href='"+fileInfo.getLink+"'><i class='fas fa-archive'></i>"+fileInfo.fileName+"</a><br>";
+					//hidden 태그 추가
+					html += "<input type='hidden' name='files' class='file' value='"+fileInfo.fullName+"'></div>";
+				}
 				// div에 추가
 				$("#uploadedList").append(html);
-
 			}
 		});
 	});
