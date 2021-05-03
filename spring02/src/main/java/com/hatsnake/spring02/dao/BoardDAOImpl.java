@@ -37,6 +37,12 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectList("board.listAll", map);
 	}
 	
+
+	@Override
+	public List<BoardDTO> listLimit() throws Exception {
+		return sqlSession.selectList("board.listLimit");
+	}
+	
 	//게시글 레코드 갯수
 	@Override
 	public int countArticle(String searchOption, String keyword) throws Exception {

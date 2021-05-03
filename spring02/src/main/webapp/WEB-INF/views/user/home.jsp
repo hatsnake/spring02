@@ -28,78 +28,67 @@
 						<h4 class="card-title">최신글</h4>
 						<p class="card-text">
 							
-							<div class="line" style="margin: 0 !important;"></div>
-							
-							<div class="card card-list" style="border: none !important;">
-								<div class="card-body" style="padding:0px !important; ">
-									<div class="card-title" style="margin:10px;">
-											재밌는 글 1 &nbsp;
-											<span style="color:red; font-size:17px;">
-												<i class="far fa-comment-dots"></i> 
-												10
-											</span>
-									</div>
+							<c:forEach var="row" items="${list}">
+								<c:choose>
+									<c:when test="${row.show == 'y'}">
 									
-								</div>
-							</div>
-
-							<div class="line" style="margin: 0 !important;"></div>
-
-							<div class="card card-list" style="border: none !important;">
-								<div class="card-body" style="padding:0px !important; ">
-									<div class="card-title" style="margin:10px;">
-											재밌는 글 1 &nbsp;
-											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
-												10
-											</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="line" style="margin: 0 !important;"></div>
-
-							<div class="card card-list" style="border: none !important;">
-								<div class="card-body" style="padding:0px !important; ">
-									<div class="card-title" style="margin:10px;">
-											재밌는 글 1 &nbsp;
-											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
-												10
-											</span>
-									</div>
-								</div>
-							</div>	
-
-							<div class="line" style="margin: 0 !important;"></div>
-
-							<div class="card card-list" style="border: none !important;">
-								<div class="card-body" style="padding:0px !important; ">
-									<div class="card-title" style="margin:10px;">
-											재밌는 글 1 &nbsp;
-											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
-												10
-											</span>
-									</div>
-								</div>
-							</div>
+										<div class="line" style="margin: 0 !important;"></div>
+										
+										<div class="card card-list" style="border: none !important;">
+											<div class="card-body" style="padding:0px !important; ">
+												<a href="${path}/board/viewLimit?bno=${row.bno}">
+													<div class="card-title" style="margin:10px;">
+														${row.title} &nbsp;
+														<!-- 댓글이 있으면 게시글 이름 옆에 댓글 수 출력 -->
+														<c:if test="${row.recnt > 0}">
+															<span style="color:red; font-size:17px;">
+																<i class="far fa-comment-dots"></i> 
+																${row.recnt}
+															</span>
+														</c:if>
+													</div>
+												</a>
+												
+											</div>
+										</div>
+			
+										<div class="line" style="margin: 0 !important;"></div>	
 							
-							<div class="line" style="margin: 0 !important;"></div>
+									</c:when>
+									<c:otherwise>
+									
+										<div class="line" style="margin: 0 !important;"></div>
+										
+										<div class="card card-list" style="border: none !important;">
+											<div class="card-body" style="padding:0px !important; ">
+												<div class="card-title" style="margin:10px;">
+													<c:if test="${row.recnt > 0}">
+														<a href="${path}/board/viewLimit?bno=${row.bno}">
+															삭제된 게시글입니다.
+															<span style="color:red; font-size:17px;">
+																<i class="far fa-comment-dots"></i> 
+																${row.recnt}
+															</span>
+														</a>
+													</c:if>
+													<c:if test="${row.recnt == 0}">
+														삭제된 게시글입니다.
+													</c:if>
+												</div>
+											</div>
+										</div>
+			
+										<div class="line" style="margin: 0 !important;"></div>		
+																	
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							
 
-							<div class="card card-list" style="border: none !important;">
-								<div class="card-body" style="padding:0px !important; ">
-									<div class="card-title" style="margin:10px;">
-											재밌는 글 1 &nbsp;
-											<span style="color:red; font-size:17px;"><i class="far fa-comment-dots"></i> 
-												10
-											</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="line" style="margin: 0 !important;"></div>
 
 						</p>
 						<div class="float-right">
-							<a href="#" class="card-link" style="float:right;">더보기</a>
+							<a href="${path}/board/list" class="card-link" style="float:right;">더보기</a>
 						</div>
 					</div>
 				</div>

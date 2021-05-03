@@ -3,9 +3,11 @@ package com.hatsnake.spring02.controller;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,11 +15,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hatsnake.spring02.common.security.ShaEncoder;
 import com.hatsnake.spring02.dao.UserDAO;
+import com.hatsnake.spring02.domain.BoardDTO;
+import com.hatsnake.spring02.service.BoardService;
 
 @Controller
 public class UserController {
@@ -27,15 +31,27 @@ public class UserController {
 	@Inject
 	private UserDAO userDao;
 	
+	@Inject
+	private BoardService boardService;
+	
 	//시작 페이지 이동
 	@RequestMapping(value="/")
-	public String home(Model model) {
-		return "user/home";
+	public ModelAndView home() throws Exception {
+		
+		List<BoardDTO> list = boardService.listLimit();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/home");
+		mav.addObject("list", list);
+		
+		return mav;
 	}
 	
 	//로그인 페이지 이동
 	@RequestMapping(value="/user/login")
-	public String login() {
+	public String login(HttpServletRequest request) {
+		String referrer = request.getHeader("Referer");
+		request.getSession().setAttribute("prevPage", referrer);
 		return "user/login";
 	}
 	

@@ -1,0 +1,11 @@
+<style>
+.box {
+	width:200px;
+	height:200px;
+	background:gray;
+}
+</style>
+
+<div class="box">
+
+</div>

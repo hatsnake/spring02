@@ -8,6 +8,8 @@ public interface BoardDAO {
 
 	public List<BoardDTO> listAll(int start, int end, String searchOption, String keyword) throws Exception;
 	
+	public List<BoardDTO> listLimit() throws Exception;
+	
 	public int countArticle(String searchOption, String keyword) throws Exception;
 
 	public BoardDTO read(int bno) throws Exception;

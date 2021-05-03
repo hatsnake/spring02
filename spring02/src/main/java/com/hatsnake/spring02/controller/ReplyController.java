@@ -3,6 +3,7 @@ package com.hatsnake.spring02.controller;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -156,8 +157,8 @@ public class ReplyController {
 	
 	//댓글 상세보기 (모달방식)
 	@RequestMapping(value="/detail/{rno}", method=RequestMethod.GET)
-	public HashMap<String, Object> replyDetail(@PathVariable("rno") Integer rno) {
-		HashMap<String, Object> replyData = new HashMap<String, Object>();
+	public Map<String, Object> replyDetail(@PathVariable("rno") Integer rno) {
+		Map<String, Object> replyData = new HashMap<String, Object>();
 		ReplyDTO dto = replyService.detail(rno);
 		
 		replyData.put("rno", dto.getRno());

@@ -15,6 +15,16 @@
 	 	<include refid="pagingFooter"></include>
 	 </select>
 	 
+	 <select id="listLimit" resultType="com.hatsnake.spring02.domain.BoardDTO">
+		<![CDATA[
+		select * from (
+			select rownum, bno, title, content, writer, regdate, viewcnt,
+			(select count(*) from reply where bno=b.bno) as recnt, show
+			from board b order by bno desc, regdate desc 
+		) where rownum <= 10
+		]]>
+	 </select>
+	 
 	 <!-- 게시글 레코드 갯수 -->
 	 <select id="countArticle" resultType="int">
 	 	select count(*) from board

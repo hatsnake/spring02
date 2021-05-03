@@ -25,6 +25,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 	*/
 
+	@Override
+	public List<BoardDTO> listLimit() throws Exception {
+		return boardDao.listLimit();
+	}
+	
 	//게시글 전체 조회 (검색)
 	@Override
 	public List<BoardDTO> listAll(int start, int end, String searchOption, String keyword) throws Exception {
@@ -57,7 +62,7 @@ public class BoardServiceImpl implements BoardService {
 		long current_time = System.currentTimeMillis();
 		//일정시간이 경과 후 조회수 증가 처리 (24*60*60*1000 - 24시간)
 		//열람시간 > 일정시간 = 조회수 증가
-		if(current_time - update_time > 5*1000) {
+		if(current_time - update_time > 1000*60*60*24) {
 			boardDao.increaseViewctn(bno);
 			//세션에 시간을 저장 : "update_time_"+bno는 다른변수와 중복되지 않게 명명
 			session.setAttribute("update_time_"+bno, current_time);
@@ -91,7 +96,6 @@ public class BoardServiceImpl implements BoardService {
 		if(files == null) return; //첨부파일이 없으면 메소드 종료
 		//첨부파일들의 정보를 attach_board테이블에 insert
 		for(String name : files) {
-			System.out.println(name);
 			boardDao.addAttach(name);
 		}
 	}

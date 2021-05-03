@@ -9,7 +9,7 @@ import com.hatsnake.spring02.domain.BoardDTO;
 public interface BoardService {
 
 	
-	// public List<BoardDTO> listAll() throws Exception;
+	public List<BoardDTO> listLimit() throws Exception;
 	
 	public BoardDTO read(int bno) throws Exception;
 	

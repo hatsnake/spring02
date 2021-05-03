@@ -94,7 +94,7 @@ public class BoardController {
 	
 	//게시글 상세조회, 조회수 증가 처리
 	@RequestMapping(value="/view", method=RequestMethod.GET)
-	public ModelAndView view(Model model, Principal principal, @RequestParam int bno, 
+	public ModelAndView view(Principal principal, @RequestParam int bno, 
 					   @RequestParam int curPage, @RequestParam String searchOption,
 					   @RequestParam String keyword, HttpSession session) throws Exception {
 		//조회수 증가 처리
@@ -117,6 +117,30 @@ public class BoardController {
 		
 		return mav;
 	}
+	
+	//게시글 상세조회, 조회수 증가 처리
+	@RequestMapping(value="/viewLimit", method=RequestMethod.GET)
+	public ModelAndView viewLimit(Principal principal, @RequestParam int bno, HttpSession session) throws Exception {
+		//조회수 증가 처리
+		boardService.increaseViewcnt(bno, session);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/view");
+		mav.addObject("count", replyService.count(bno));
+		mav.addObject("dto", boardService.read(bno));
+		//mav.addObject("curPage", curPage);
+		//mav.addObject("searchOption", searchOption);
+		//mav.addObject("keyword", keyword);
+		
+		if(principal != null) {
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username = user.getUsername();
+			
+			mav.addObject("username", username);
+		}
+		
+		return mav;
+	}	
 	
 	//게시글 수정화면
 	@RequestMapping(value="/update", method=RequestMethod.GET)
