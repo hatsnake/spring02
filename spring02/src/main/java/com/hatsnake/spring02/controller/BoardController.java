@@ -67,12 +67,15 @@ public class BoardController {
 	@RequestMapping(value="/write", method=RequestMethod.GET)
 	public String write(Model model, Principal principal) {
 		
+		User user = null;
+		String username = null;
+		
 		if(principal != null) {
-			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username = user.getUsername();
-			
-			model.addAttribute("username", username);
+			user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			username = user.getUsername();	
 		}
+		
+		model.addAttribute("username", username);
 		
 		return "board/write";
 	}
@@ -121,6 +124,10 @@ public class BoardController {
 	//게시글 상세조회, 조회수 증가 처리
 	@RequestMapping(value="/viewLimit", method=RequestMethod.GET)
 	public ModelAndView viewLimit(Principal principal, @RequestParam int bno, HttpSession session) throws Exception {
+		
+		User user = null;
+		String username = null;		
+		
 		//조회수 증가 처리
 		boardService.increaseViewcnt(bno, session);
 		
@@ -133,11 +140,11 @@ public class BoardController {
 		//mav.addObject("keyword", keyword);
 		
 		if(principal != null) {
-			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username = user.getUsername();
-			
-			mav.addObject("username", username);
+			user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			username = user.getUsername();
 		}
+		
+		mav.addObject("username", username);
 		
 		return mav;
 	}	

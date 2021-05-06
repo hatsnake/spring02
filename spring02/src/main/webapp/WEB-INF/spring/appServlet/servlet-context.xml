@@ -18,15 +18,14 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!-- webapp 내부 경로부터 작성 -->
-	<resources mapping="/resources/**" location="/resources/" />
+	<resources location="/resources/" mapping="/resources/**" />
+	<resources location="/resources/images/" mapping="/images/**" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
-	<context:component-scan base-package="com.hatsnake.spring02" />
 
 	<!-- @Secured 어노테이션 작성하면 스프링 시큐리티 적용 -->
 	<security:global-method-security secured-annotations="enabled"/>
@@ -46,4 +45,6 @@
 		<beans:constructor-arg value="C:/Users/hatsnake/git/spring02/spring02/src/main/webapp/resources/images/"/>
 	</beans:bean>
 	
+	<context:component-scan base-package="com.hatsnake.spring02.*" />
+
 </beans:beans>

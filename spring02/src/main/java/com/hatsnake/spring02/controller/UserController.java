@@ -31,22 +31,6 @@ public class UserController {
 	@Inject
 	private UserDAO userDao;
 	
-	@Inject
-	private BoardService boardService;
-	
-	//시작 페이지 이동
-	@RequestMapping(value="/")
-	public ModelAndView home() throws Exception {
-		
-		List<BoardDTO> list = boardService.listLimit();
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("user/home");
-		mav.addObject("list", list);
-		
-		return mav;
-	}
-	
 	//로그인 페이지 이동
 	@RequestMapping(value="/user/login")
 	public String login(HttpServletRequest request) {

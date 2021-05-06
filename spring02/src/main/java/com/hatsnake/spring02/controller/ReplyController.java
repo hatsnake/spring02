@@ -40,9 +40,11 @@ public class ReplyController {
 	@RequestMapping("/insert")
 	public void insert(Principal principal, @ModelAttribute ReplyDTO dto) {
 		
+		String username = null;
+		
 		if(principal != null) {
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username = user.getUsername();
+			username = user.getUsername();
 			
 			dto.setReplyer(username);
 		}
