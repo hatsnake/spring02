@@ -5,11 +5,16 @@
  
  <mapper namespace="user">
  	<insert id="insertUser">
- 		insert into users values (#{userid}, #{passwd}, #{name}, 1, 'ROLE_USER')
+ 		insert into users (userid, passwd, name, enabled, authority, email) 
+ 		values (#{userid}, #{passwd}, #{name}, 1, 'ROLE_USER', #{email})
  	</insert>
  	
  	<select id="selectUser" resultType="java.util.Map">
- 		select userid as username, passwd as password, name, enabled, authority 
+ 		select userid as username, passwd as password, name, enabled, authority, email, regDate, updateDate
  		from users where userid=#{userid}
+ 	</select>
+ 	
+ 	<select id="idCheck" resultType="int">
+ 		select count(*) from users where userId = #{userId}
  	</select>
  </mapper>

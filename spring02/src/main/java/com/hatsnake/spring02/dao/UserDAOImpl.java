@@ -25,4 +25,9 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectOne("user.selectUser", userid);
 	}
 
+	@Override
+	public int idCheck(String userId) {
+		return sqlSession.selectOne("user.idCheck", userId);
+	}
+
 }
