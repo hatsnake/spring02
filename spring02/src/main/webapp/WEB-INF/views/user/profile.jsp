@@ -25,6 +25,9 @@
 						<h1 style="text-align:center;">회원정보</h1>
 						<div>아이디 : ${username}</div>
 						<div>이름 : ${name}</div>
+						<div>이메일 : ${email}</div>
+						<div>가입일 : ${regDate}</div>
+						<div>수정일 : ${updateDate}</div>						
 						<div>권한 :  
 							<c:choose>
 								<c:when test="${auth == '[ROLE_USER]'}">

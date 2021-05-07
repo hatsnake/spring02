@@ -59,9 +59,9 @@ $(document).ready(function(){
 			</div>
 		</a>
 
-	    <!-- 비로그인 상태 -->
-	    <s:authorize access="isAnonymous()">
-	    	<div class="flex-shrink-0">
+    <!-- 비로그인 상태 -->
+    <s:authorize access="isAnonymous()">
+	    <div class="flex-shrink-0">
 				<button type="button" class="btn btn-success login">로그인</button>
 				<!-- <button type="button" class="btn btn-default join">회원가입</button> -->
 			</div>
@@ -74,22 +74,22 @@ $(document).ready(function(){
 
 		<!-- 로그인 상태 -->	
 		<s:authorize access="isAuthenticated()">
-		<div class="flex-shrink-0 dropdown">
-			<span href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-				<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-			</span>
-			<ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-				<s:authentication property="principal" var="user"/>
-				<li><span class="dropdown-item">${user.username}</a></li>
-				<li><hr class="dropdown-divider"></li>
-				<li><a class="dropdown-item profile">내정보</a></li>
-				<li><a class="dropdown-item">설정</a></li>
-				<li><hr class="dropdown-divider"></li>
-				<li>
-					<a class="dropdown-item logout">로그아웃</a>
-				</li>
-			</ul>
-		</div>
+			<div class="flex-shrink-0 dropdown">
+				<span href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+					<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+				</span>
+				<ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+					<s:authentication property="principal" var="user"/>
+					<li><span class="dropdown-item">${user.username}</a></li>
+					<li><hr class="dropdown-divider"></li>
+					<li><a class="dropdown-item profile">내정보</a></li>
+					<li><a class="dropdown-item">설정</a></li>
+					<li><hr class="dropdown-divider"></li>
+					<li>
+						<a class="dropdown-item logout">로그아웃</a>
+					</li>
+				</ul>
+			</div>
 		</s:authorize>
 		
 	</div>

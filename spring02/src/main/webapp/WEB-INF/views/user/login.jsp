@@ -43,6 +43,10 @@
 							<label class="form-check-label" for="flexSwitchCheckDefault">자동 로그인</label>
 						</div>
 						
+						<s:authorize access="isAnonymous()">
+						 비로그인 상태
+						</s:authorize>
+						<c:out value="500"/>
 						<button class="w-100 btn btn-md btn-primary loginCheck" type="submit">로그인</button>
 						<button class="w-100 btn btn-md btn-secondary join" type="button">회원가입</button>    
 						<p class="mt-4 mb-3 text-muted"></p>
