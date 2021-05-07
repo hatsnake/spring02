@@ -1,7 +1,6 @@
 package com.hatsnake.spring02.common.security;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +45,8 @@ public class UserAuthenticationService implements UserDetailsService {
 		return new UserDTO(user.get("USERNAME").toString(),
                 user.get("PASSWORD").toString(),
                 (Integer)Integer.valueOf(user.get("ENABLED").toString())==1,
-                true,true,true,authority, user.get("NAME").toString(), user.get("EMAIL").toString(), (Date)user.get("REGDATE"), (Date)user.get("UPDATEDATE"));
+                true,true,true,authority,
+                user.get("USERNAME").toString());
 	}
 	
 

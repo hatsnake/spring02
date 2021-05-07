@@ -7,5 +7,4 @@ public interface UserDAO {
 	public int insertUser(Map<String, String> map);
 	//로그인 처리 (회원 상세 정보)
 	public Map<String, Object> selectUser(String userid);
-	public int idCheck(String userid);
 }

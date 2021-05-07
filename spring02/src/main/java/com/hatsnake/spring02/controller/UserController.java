@@ -2,8 +2,8 @@ package com.hatsnake.spring02.controller;
 
 import java.security.Principal;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -15,13 +15,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hatsnake.spring02.common.security.ShaEncoder;
 import com.hatsnake.spring02.dao.UserDAO;
-import com.hatsnake.spring02.domain.UserDTO;
+import com.hatsnake.spring02.domain.BoardDTO;
+import com.hatsnake.spring02.service.BoardService;
 
 @Controller
 public class UserController {
@@ -48,33 +48,17 @@ public class UserController {
 	//회원가입 처리
 	@RequestMapping(value="/user/insertUser")
 	public String insertUser(@RequestParam String userid, @RequestParam String passwd, 
-							 @RequestParam String name, @RequestParam String email, Model model) {
+							 @RequestParam String name) {
+		//비밀번호 암호화
+		String dbpw = shaEncoder.saltEncoding(passwd, userid);
+		Map<String, String> map = new HashMap<>();
+		map.put("userid", userid);
+		map.put("passwd", dbpw);
+		map.put("name", name);
 		
-			boolean useridCheck = userid.equals("");
-			boolean passwdCheck = passwd.equals("");
-			boolean nameCheck = name.equals("");
-			boolean emailCheck = email.equals("");
-			
-			if(useridCheck || passwdCheck || nameCheck || emailCheck) {
-				model.addAttribute("userid", userid);
-				model.addAttribute("passwd", passwd);
-				model.addAttribute("name", name);
-				model.addAttribute("email", email);
-				
-				return "user/join";
-			} else {
-				//비밀번호 암호화
-				String dbpw = shaEncoder.saltEncoding(passwd, userid);
-				Map<String, String> map = new HashMap<>();
-				map.put("userid", userid);
-				map.put("passwd", dbpw);
-				map.put("name", name);
-				map.put("email", email);
-				
-				int result = userDao.insertUser(map);
-				
-				return "user/login";
-			}
+		int result = userDao.insertUser(map);
+		
+		return "user/login";
 	}
 	
 	//관리자 영역 페이지
@@ -89,39 +73,17 @@ public class UserController {
 		
 		if(principal != null) {
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			UserDTO userDto = (UserDTO) user;
 			String username = user.getUsername();
 			String password = user.getPassword();
-			String name = userDto.getName();
-			String email = userDto.getEmail();
-			Date regDate = userDto.getRegDate();
-			Date updateDate = userDto.getUpdateDate();
-			
 			Collection<GrantedAuthority> auth = user.getAuthorities();
+			String name = principal.getName();
 			
 			model.addAttribute("username", username);
-			model.addAttribute("auth", auth);
 			model.addAttribute("name", name);
-			model.addAttribute("email", email);
-			model.addAttribute("regDate", regDate);
-			model.addAttribute("updateDate", updateDate);
+			model.addAttribute("auth", auth);
 		}
 		
 		return "user/profile";
-	}
-	
-	//사용자 아이디 체크
-	@RequestMapping(value="/user/useridCheck", method=RequestMethod.POST)
-	@ResponseBody
-	public String useridCheck(String userid) throws Exception {
-			int result = userDao.idCheck(userid);
-			
-			if(result != 0) {
-				return "fail";
-			} else {
-				return "success";
-			}
-			
 	}
 	
 }

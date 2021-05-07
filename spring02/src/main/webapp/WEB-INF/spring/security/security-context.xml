@@ -66,13 +66,13 @@
     </beans:bean>
     
     <!-- 사용자가 입력한 비밀번호를 암호화된 비밀번호와 체크하는 로직이 포함됨 -->
-		<authentication-manager>
-			<authentication-provider user-service-ref="userService">
-				<password-encoder ref="passwordEncoder">
-					<salt-source user-property="username"/>
-				</password-encoder>
-			</authentication-provider>
-		</authentication-manager>
+	<authentication-manager>
+		<authentication-provider user-service-ref="userService">
+			<password-encoder ref="passwordEncoder">
+				<salt-source user-property="username"/>
+			</password-encoder>
+		</authentication-provider>
+	</authentication-manager>
     
     <!-- 비밀번호 암호화 빈 -->
     <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
