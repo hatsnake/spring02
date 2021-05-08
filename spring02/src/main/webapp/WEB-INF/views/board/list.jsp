@@ -9,6 +9,12 @@
 .boardDate {
 	font-size:0.9rem;
 }
+a:link .readed {
+	color:black;
+}
+a:visited .readed {
+	color:#989191;
+}
 </style>
 <script type="text/javascript">
 //글쓰기 페이지 이동
@@ -136,7 +142,7 @@ function formatDate(date) {
 											<td>
 												<a href="${path}/board/view?bno=${row.bno}&curPage=${map.boardPager.curPage}
 													&searchOption=${map.searchOption}&keyword=${map.keyword}">
-													<span style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis; width:150px;">
+													<span class="readed" style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis; width:150px;">
 														${row.title}&nbsp;&nbsp;
 													</span>
 													<!-- 댓글이 있으면 게시글 이름 옆에 댓글 수 출력 -->
@@ -159,8 +165,9 @@ function formatDate(date) {
 										<tr>
 											<td colspan="5" align="left">
 												<c:if test="${row.recnt > 0}">
-													<a href="${path}/board/view?bno=${row.bno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">
-														삭제된 게시글입니다.
+													<a href="${path}/board/view?bno=${row.bno}&curPage=${map.boardPager.curPage}
+																		&searchOption=${map.searchOption}&keyword=${map.keyword}">
+														<span style="color:red;">삭제된 게시글입니다.</span>
 														<span style="color:red; font-size:17px;">
 															<i class="far fa-comment-dots"></i> 
 															${row.recnt}
@@ -168,7 +175,9 @@ function formatDate(date) {
 													</a>
 												</c:if>
 												<c:if test="${row.recnt == 0}">
-													삭제된 게시글입니다.
+													<span style="color:red;">
+														삭제된 게시글입니다.
+													</span>
 												</c:if>
 											</td>
 										</tr>									

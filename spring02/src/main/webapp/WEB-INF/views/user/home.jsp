@@ -9,6 +9,14 @@
 	.card-list:hover {
 		background: #f5f3f3;
 	}
+	
+	a:link .readed {
+		color:black;
+	}
+	
+	a:visited .readed {
+		color:#989191;
+	}
 </style>
 </head>
 
@@ -38,7 +46,7 @@
 											<div class="card-body" style="padding:0px !important; ">
 												<a href="${path}/board/viewLimit?bno=${row.bno}">
 													<div class="card-title" style="margin:10px;">
-														${row.title} &nbsp;
+														<span class="readed">${row.title}</span> &nbsp;
 														<!-- 댓글이 있으면 게시글 이름 옆에 댓글 수 출력 -->
 														<c:if test="${row.recnt > 0}">
 															<span style="color:red; font-size:17px;">
@@ -63,7 +71,7 @@
 											<div class="card-body" style="padding:0px !important; ">
 												<div class="card-title" style="margin:10px;">
 													<c:if test="${row.recnt > 0}">
-														<a href="${path}/board/viewLimit?bno=${row.bno}">
+														<a href="${path}/board/viewLimit?bno=${row.bno}" style="color:red;">
 															삭제된 게시글입니다.
 															<span style="color:red; font-size:17px;">
 																<i class="far fa-comment-dots"></i> 
@@ -72,7 +80,7 @@
 														</a>
 													</c:if>
 													<c:if test="${row.recnt == 0}">
-														삭제된 게시글입니다.
+														<span style="color:red;">삭제된 게시글입니다.</span>
 													</c:if>
 												</div>
 											</div>

@@ -1,13 +1,13 @@
 package com.hatsnake.spring02.controller;
 
 import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -121,7 +121,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	//게시글 상세조회, 조회수 증가 처리
+	//메인에서 상세보기로 이동
 	@RequestMapping(value="/viewLimit", method=RequestMethod.GET)
 	public ModelAndView viewLimit(Principal principal, @RequestParam int bno, HttpSession session) throws Exception {
 		

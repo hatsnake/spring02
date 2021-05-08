@@ -2,6 +2,8 @@ package com.hatsnake.spring02.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hatsnake.spring02.domain.BoardDTO;
