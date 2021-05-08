@@ -18,8 +18,9 @@ public class UserDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest req, HttpServletResponse res,
 			AccessDeniedException ade) throws IOException, ServletException {
-		req.setAttribute("errMsg", "관리자만 사용할 수 있는 기능입니다.");
-		String url = "/WEB-INF/views/user/denied.jsp";
+		req.setAttribute("errMsgTitle", "접근불가 페이지");
+		req.setAttribute("errMsgContent", "현재페이지에 접근하실 수 없습니다.");
+		String url = "/WEB-INF/views/error/denied.jsp";
 		RequestDispatcher rd = req.getRequestDispatcher(url);
 		rd.forward(req, res);
 	}

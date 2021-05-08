@@ -17,9 +17,9 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		
 		request.setAttribute("errMsg", "아이디 또는 비밀번호가 일치하지 않습니다.");
 		request.getRequestDispatcher("/user/login").forward(request, response);
+		//response.sendRedirect("/user/login");
 	}
 
 }

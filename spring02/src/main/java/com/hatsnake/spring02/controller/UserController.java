@@ -36,6 +36,7 @@ public class UserController {
 	public String login(HttpServletRequest request) {
 		String referrer = request.getHeader("Referer");
 		request.getSession().setAttribute("prevPage", referrer);
+
 		return "user/login";
 	}
 	

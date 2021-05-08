@@ -146,7 +146,9 @@ public class UploadController {
 			//HTTP상태 코드()
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 		} finally {
-			in.close(); //스트림 닫기
+			if(in != null) {
+				in.close(); //스트림 닫기
+			}
 		}
 		return entity;
 	}

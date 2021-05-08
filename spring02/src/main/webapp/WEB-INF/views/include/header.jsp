@@ -68,7 +68,7 @@ $(document).ready(function(){
 		</s:authorize>
 		
 		<!-- 관리자 로그인 상태 -->
-	    <s:authorize access="hasRole('admin')">
+	  <s:authorize access="hasRole('admin')">
 			관리자 로그인
 		</s:authorize>		
 
