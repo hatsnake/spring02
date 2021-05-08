@@ -303,16 +303,18 @@
 						
 						<!-- 이메일 테스트 -->
 						<div class="mail_wrap">
-							<div class="mail_name">이메일</div>
-							<div class="mail_input_box">
-								<input class="mail_input" name="memberMail">
+							<div class="form-floating mb-4 mail_input_box">
+								<input type="email" name="email" class="form-control email mail_input"  id="email_input" placeholder="이메일" value="${email}" required>
+								<label for="floatingInput">이메일</label>
+								<div class="valid-feedback" id="email_success">사용할 수 있는 이메일입니다.</div>
+								<div class="invalid-feedback" id="email_fail">사용할 수 있는 이메일입니다.</div>
 							</div>
-							<div class="mail_check_wrap">
+							<div class="input-group mail_check_wrap">
 								<div class="mail_check_input_box" id="mail_check_input_box_false">
-									<input class="mail_check_input" disabled="disabled" style="float:left;">
+									<input type="text" class="form-control mail_check_input" disabled="disabled" style="float:left;">
 								</div>
 								<div class="mail_check_button" style="float:left;">
-									<span>인증번호 전송</span>
+									<span class="btn btn-outline-secondary">인증번호 전송</span>
 								</div>
 								<div class="clearfix"></div>
 								<span id="mail_check_input_box_warn"></span>
