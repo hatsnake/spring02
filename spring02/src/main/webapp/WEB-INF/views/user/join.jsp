@@ -175,6 +175,7 @@
 		});
 
 		//이메일
+		/*
 		$("#email_input").on("propertychange change keyup paste input", function() {
 			var email = $("#email_input").val();
 
@@ -200,7 +201,8 @@
 			}
 			
 		});
-
+		*/
+		
 	  $("#join_button").on("click", function(event) {
 			if(userid_check && passwd_check && passwd_check2 && name_check && email_check) {
 				alert("회원가입에 성공하셨습니다.");
@@ -215,10 +217,16 @@
 	      var email = $(".mail_input").val();        // 입력한 이메일
 	      var checkBox = $(".mail_check_input");      // 인증번호 입력란
 	      var boxWrap = $(".mail_check_input_box");		// 인증번호 입력란 박스
+	      var mail_button = $(".mail_button");
 	      $.ajax({
 	          type:"GET",
 	          url:"/mailCheck?email=" + email,
+	          beforeSend:function() {
+							mail_button.html("<span class='spinner-border spinner-border-sm'></span>");
+		        },
 	          success:function(data) {
+		          alert("이메일이 전송되었습니다. 확인해주세요.");
+		          mail_button.html("인증번호 전송");
 							checkBox.attr("disabled", false);
 							boxWrap.attr("id", "mail_check_input_box_true");
 							code = data;
@@ -227,16 +235,18 @@
 	  });
 
 	  /* 인증번호 비교 */
-	  $(".mail_check_input").blur(function(){
+	  $(".mail_check_input").on("blur propertychange change keyup paste input", function(){
 	    var inputCode = $(".mail_check_input").val();        // 입력코드    
 	    var checkResult = $("#mail_check_input_box_warn");    // 비교 결과
-
+			var mailButton = $(".mail_button");
 	    if(inputCode == code){                            // 일치할 경우
 	        checkResult.html("인증번호가 일치합니다.");
-	        checkResult.attr("class", "correct");        
+	        checkResult.attr("class", "correct");    
+	        email_check = true;  
 	    } else {                                          // 일치하지 않을 경우
 	        checkResult.html("인증번호를 다시 확인해주세요.");
 	        checkResult.attr("class", "incorrect");
+	        email_check = false;
 	    }   
 	    
 	  });
@@ -293,32 +303,26 @@
 							<div class="valid-feedback" id="name_success">사용할 수 있는 이름입니다.</div>
 							<div class="invalid-feedback" id="name_fail">사용할 수 없는 이름입니다.</div>
 						</div>
-
-						<div class="form-floating mb-4">
-							<input type="email" name="email" class="form-control email" id="email_input" placeholder="이메일" value="${email}" required>
-							<label for="floatingInput">이메일</label>
-							<div class="valid-feedback" id="email_success">사용할 수 있는 이메일입니다.</div>
-							<div class="invalid-feedback" id="email_fail">사용할 수 있는 이메일입니다.</div>
-						</div>
 						
 						<!-- 이메일 테스트 -->
 						<div class="mail_wrap">
-							<div class="form-floating mb-4 mail_input_box">
-								<input type="email" name="email" class="form-control email mail_input"  id="email_input" placeholder="이메일" value="${email}" required>
-								<label for="floatingInput">이메일</label>
-								<div class="valid-feedback" id="email_success">사용할 수 있는 이메일입니다.</div>
-								<div class="invalid-feedback" id="email_fail">사용할 수 있는 이메일입니다.</div>
-							</div>
-							<div class="input-group mail_check_wrap">
-								<div class="mail_check_input_box" id="mail_check_input_box_false">
-									<input type="text" class="form-control mail_check_input" disabled="disabled" style="float:left;">
-								</div>
+						
+							<div class="input-group mail_input_box mb-2">
+								
+								<input type="email" name="email" class="form-control email mail_input"  id="email_input" placeholder="이메일" value="${email}" style="float:left;" required>
 								<div class="mail_check_button" style="float:left;">
-									<span class="btn btn-outline-secondary">인증번호 전송</span>
+									<span class="btn btn-outline-secondary mail_button">인증번호 전송</span>
 								</div>
 								<div class="clearfix"></div>
+							</div>
+							
+							<div class="input-group mail_check_wrap">
+								<div class="mail_check_input_box" id="mail_check_input_box_false">
+									<input type="text" class="form-control mail_check_input" disabled="disabled">
+								</div>
 								<span id="mail_check_input_box_warn"></span>
 							</div>
+							
 						</div>
 						
 						<p class="mt-4 mb-3 text-muted"></p>

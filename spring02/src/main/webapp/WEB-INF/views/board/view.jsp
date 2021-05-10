@@ -158,7 +158,76 @@ $(document).ready(function() {
 	//게시글 목록 이동 버튼이벤트
 	$(".list").on("click", function() {
 		location.href="${path}/board/list?curPage=${curPage}&searchOption=${searchOption}&keyword=${keyword}";
-	});				
+	});
+
+	//종아요 & 싫어요 이벤트
+	$(".like_button").on("click", function() {
+		var userid = `${username}`;
+		if(userid) {
+			map = {
+				"userid" : userid,
+				"bno" : ${bno}
+			};
+			
+			$.ajax({
+				type: "post",
+				url: "/board/clickLike",
+				dataType: "json",
+				data: map,
+				error: function() {
+					alert("에러발생");
+				},
+				success: function(result) {
+					if(result.resultCode == -1) {
+						alert("좋아요 오류");
+					} else {
+						if(result.likeCheck == 1) {
+							console.log("좋아요 성공 : "+result.likeCnt);
+							$(".like_cnt").text(result.likeCnt);
+							$(".like_button").toggleClass("btn-primary").toggleClass("btn-secondary");
+						} else if(result.likeCheck == 0) {
+							console.log("좋아요 제거 : "+result.likeCnt);
+							$(".like_cnt").text(result.likeCnt);
+							$(".like_button").toggleClass("btn-primary").toggleClass("btn-secondary");
+						}
+					}
+				}
+			});
+		} else {
+			alert("로그인을 하셔야 좋아요를 누를 수 있습니다.");
+		}
+		
+		/*
+		var hate_button = $("#hate_button").hasClass("btn-primary");
+
+		if(hate_button) {
+			//싫어요버튼을 지우고 좋아요버튼을 활성화
+			//좋아요
+			$("#hate_button").toggleClass("btn-primary").toggleClass("btn-secondary");
+			$("#like_button").toggleClass("btn-primary").toggleClass("btn-secondary");			
+		} else {
+			//종아요버튼을 활성화
+			$("#like_button").toggleClass("btn-primary").toggleClass("btn-secondary");	
+		}
+		*/
+		
+	});
+
+	/*
+	$("#hate_button").on("click", function() {
+		var like_button = $("#like_button").hasClass("btn-primary");
+
+		if(like_button) {
+			//좋아요버튼을 지우고 싫어요버튼을 활성화
+			$("#hate_button").toggleClass("btn-primary").toggleClass("btn-secondary");
+			$("#like_button").toggleClass("btn-primary").toggleClass("btn-secondary");			
+		} else {
+			//싫어요버튼을 활성화
+			$("#hate_button").toggleClass("btn-primary").toggleClass("btn-secondary");	
+		}
+	});
+	*/
+	
 });
 
 //댓글작성 1번째 (폼데이터로 입력)
@@ -329,7 +398,7 @@ function deleteReply(rno) {
         <div id="content">
 			<%@ include file="../include/header.jsp" %>
 		
-			<div class="container">
+			<div class="container" style="max-width:760px;">
 				
 				<h1 style="margin-left:15px;">카테고리 : 주식</h1>
 				<div style="padding:20px !important; background:white; border-radius: 25px; box-shadow:1px 1px 5px gray;">
@@ -364,6 +433,32 @@ function deleteReply(rno) {
 								<div style="margin-left:5px; margin-bottom: 5px;">
 									<div id="uploadedList"></div>
 								</div>
+							
+								<c:choose>
+								
+									<c:when test="${likeCheck eq '0' or empty likeCheck }">
+										<div class="d-flex justify-content-center">
+											<div class="like_button btn btn-secondary m-2">
+												<i class="fas fa-thumbs-up"></i> 좋아요 <span class="like_cnt">${likeCnt}</span>
+											</div>
+										</div>
+									</c:when>
+									
+									<c:otherwise>
+										<div class="d-flex justify-content-center">
+											<div class="like_button btn btn-primary m-2">
+												<i class="fas fa-thumbs-up"></i> 좋아요 <span class="like_cnt">${likeCnt}</span>
+											</div>
+										</div>										
+									</c:otherwise>
+								</c:choose>
+								
+								
+								<!--  
+								<div id="hate_button" class="btn btn-secondary m-2" type="submit">
+									<i class="fas fa-thumbs-down"></i> 싫어요 <span>25</span>
+								</div>
+								-->
 								
 								<input type="hidden" name="bno" id="bno" value="${dto.bno}">
 								<c:if test="${username == dto.writer}">

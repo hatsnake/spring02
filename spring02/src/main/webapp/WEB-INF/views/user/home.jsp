@@ -44,7 +44,7 @@
 										
 										<div class="card card-list" style="border: none !important;">
 											<div class="card-body" style="padding:0px !important; ">
-												<a href="${path}/board/viewLimit?bno=${row.bno}">
+												<a href="${path}/board/view?bno=${row.bno}">
 													<div class="card-title" style="margin:10px;">
 														<span class="readed">${row.title}</span> &nbsp;
 														<!-- 댓글이 있으면 게시글 이름 옆에 댓글 수 출력 -->

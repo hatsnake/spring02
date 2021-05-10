@@ -148,7 +148,7 @@ $(document).ready(function() {
 						<div id="uploadedList"></div>
 						
 						<button class="w-100 btn btn-md btn-secondary mb-2 writeCheck" type="button">게시글 등록</button> 
-						<button class="w-100 btn btn-md btn-secondary" type="reset">취소</button> 							
+						<div class="w-100 btn btn-md btn-secondary" onClick="javascript:history.back()">취소</div> 							
 						<p class="mt-4 mb-3 text-muted"></p>
 					</form>
 				</main>

@@ -14,11 +14,10 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+root-context.xml
 # External tool builders
 .externalToolBuilders/
 
-# ignore properties file
-root-context.xml
 
 # Locally stored "Eclipse launch configurations"
 *.launch
@@ -136,3 +135,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,java,eclipse,maven
+/spring02/

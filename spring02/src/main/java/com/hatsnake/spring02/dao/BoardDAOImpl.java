@@ -110,4 +110,52 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.delete("board.deleteAttach", fullname);
 	}
 
+	//좋아요 있는지 체크
+	@Override
+	public Map<String, Object> likeCheck(Map<String, Object> commandMap) {
+		return sqlSession.selectOne("board.likeCheck", commandMap);
+	}
+
+	//좋아요 추가
+	@Override
+	public void insertLikeBtn(Map<String, Object> commandMap) {
+		sqlSession.selectOne("board.insertLikeBtn", commandMap);
+	}
+
+	//좋아요 갯수 증가
+	@Override
+	public void updateLikeCntPlus(Map<String, Object> commandMap) {
+		sqlSession.update("board.updateLikeCntPlus", commandMap);
+	}
+
+	//좋아요 갯수 감소
+	@Override
+	public void updateLikeCntMinus(Map<String, Object> commandMap) {
+		sqlSession.update("board.updateLikeCntMinus", commandMap);
+	}
+
+	//좋아요 1로 바꾸기
+	@Override
+	public void updateLikeBtn(Map<String, Object> commandMap) {
+		sqlSession.update("board.updateLikeBtn", commandMap);
+	}
+
+	//좋아요 갯수 가져오기
+	@Override
+	public int getLikeCnt(Map<String, Object> commandMap) {
+		return sqlSession.selectOne("board.getLikeCnt", commandMap);
+	}
+
+	//게시글 좋아요 갯수
+	@Override
+	public int getLikeCntByBno(int bno) {
+		return sqlSession.selectOne("board.getLikeCntByBno", bno);
+	}
+
+	//게시글 사용자 좋아요 여부
+	@Override
+	public Map<String, Object> likeCheckByMap(Map<String, Object> map) {
+		return sqlSession.selectOne("board.likeCheckByMap", map);
+	}
+
 }

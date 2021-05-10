@@ -87,7 +87,7 @@
 	
 	 <!-- 게시글 상세보기 조회 -->
 	 <select id="view" resultType="com.hatsnake.spring02.domain.BoardDTO">
-	 	 select bno, title, content, b.regdate, writer, viewcnt, name, show 
+	 	 select bno, title, content, b.regdate, writer, viewcnt, name, show, likecnt
 	 	 from board b, users u
 	 	 where b.writer = u.userid
 	 	 and bno = #{bno}
@@ -111,5 +111,56 @@
 	 	update board set show = 'n'
 	 	where bno = #{bno}
 	 </update>
+	 
+	 <!-- 좋아요 있는지 체크 -->
+	 <select id="likeCheck" resultType="map">
+		select like_check from tb_like
+		where bno = #{bno}
+		and userid = #{userid}
+	 </select>
+	 
+	 <!-- 좋아요 추가 -->
+	 <insert id="insertLikeBtn">
+		insert into tb_like 
+		values(seq_like.NEXTVAL, #{bno}, #{userid}, 1)
+	 </insert>
+
+	 <!-- 좋아요 갯수 +1 -->
+	 <update id="updateLikeCntPlus">
+	 	update board set likecnt = likecnt+1 
+	 	where bno = #{bno}
+	 </update>
+
+	 <!-- 좋아요 갯수 -1 -->
+	 <update id="updateLikeCntMinus">
+	 	update board set likecnt = likecnt-1 
+	 	where bno = #{bno}
+	 </update>
+	 
+	 <!-- 사용자 체크여부 -->
+	 <update id="updateLikeBtn">
+	 	update tb_like set like_check = #{likeCheck}
+	 	where bno = #{bno}
+	 	and userid = #{userid}
+	 </update>
+	 
+	 <!-- 좋아요 여부 -->
+	 <select id="getLikeCnt" resultType="int">
+	 	select likecnt from board
+	 	where bno = #{bno}
+	 </select>
+	 
+	 <!-- 게시글 좋아요 있는지 체크 -->
+	 <select id="likeCheckByMap" resultType="map">
+		select like_check from tb_like
+		where userid = #{userid}
+		and bno = #{bno}
+	 </select>
+	 
+	 <!-- 게시글 좋아요 여부 -->
+	 <select id="getLikeCntByBno" resultType="int">
+	 	select likecnt from board
+	 	where bno = #{bno}
+	 </select>
 	 
  </mapper>

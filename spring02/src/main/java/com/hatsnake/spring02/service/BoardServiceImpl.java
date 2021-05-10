@@ -1,15 +1,12 @@
 package com.hatsnake.spring02.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
-
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -134,6 +131,54 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void deleteFile(String fullname) {
 		boardDao.deleteFile(fullname);
+	}
+
+	//좋아요 있는지 체크
+	@Override
+	public Map<String, Object> likeCheck(Map<String, Object> commandMap) {
+		return boardDao.likeCheck(commandMap);
+	}
+
+	//좋아요 추가
+	@Override
+	public void insertLikeBtn(Map<String, Object> commandMap) {
+		boardDao.insertLikeBtn(commandMap);
+	}
+
+	//좋아요 갯수 증가
+	@Override
+	public void updateLikeCntPlus(Map<String, Object> commandMap) {
+		boardDao.updateLikeCntPlus(commandMap);
+	}
+
+	//좋아요 갯수 감소
+	@Override
+	public void updateLikeCntMinus(Map<String, Object> commandMap) {
+		boardDao.updateLikeCntMinus(commandMap);
+	}
+
+	//좋아요 1로 바꾸기
+	@Override
+	public void updateLikeBtn(Map<String, Object> commandMap) {
+		boardDao.updateLikeBtn(commandMap);
+	}
+
+	//좋아요 갯수 가져오기
+	@Override
+	public int getLikeCnt(Map<String, Object> commandMap) {
+		return boardDao.getLikeCnt(commandMap);
+	}
+
+	//게시글 좋아요 갯수
+	@Override
+	public int getLikeCntByBno(int bno) {
+		return boardDao.getLikeCntByBno(bno);
+	}
+
+	//게시글 사용자 좋아요 여부
+	@Override
+	public Map<String, Object> likeCheckByMap(Map<String, Object> map) {
+		return boardDao.likeCheckByMap(map);
 	}
 
 }
