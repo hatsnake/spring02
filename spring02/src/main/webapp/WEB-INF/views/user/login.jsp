@@ -18,10 +18,10 @@
         <div id="content">
 
 			<%@ include file="../include/header.jsp" %>
-		
+			
 			<div class="container" style="margin: 10.5rem auto;">
 				<main class="form-signin">
-					<form action="${path}/user/login_check" method="post">
+					<form action="/user/login_check" method="post">
 						<!--  
 						<img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
 						-->
@@ -29,11 +29,13 @@
 						<span style="color:red;">${errMsg}</span>
 				
 						<div class="form-floating">
-							<input type="text" name="userid" class="form-control userid" id="floatingInput" placeholder="아이디">
+							<input type="text" name="userid" class="form-control userid" 
+								id="floatingInput" placeholder="아이디" value="${userid}">
 							<label for="floatingInput">아이디</label>
 						</div>
 						<div class="form-floating">
-							<input type="password" name="passwd" class="form-control passwd" id="floatingPassword" placeholder="비밀번호">
+							<input type="password" name="passwd" class="form-control passwd" 
+								id="floatingPassword" placeholder="비밀번호" value="${passwd}">
 							<label for="floatingPassword">비밀번호</label>
 						</div>
 				
@@ -48,6 +50,8 @@
 						<div class="text-center">
 							계정이 없으신가요? <a href="/user/join" style="color:#0d6efd;">회원가입</a>
 						</div>
+						
+						<s:csrfInput />
 						
 						<p class="mt-4 mb-3 text-muted"></p>
 					</form>

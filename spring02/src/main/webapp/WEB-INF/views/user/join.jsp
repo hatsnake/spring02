@@ -29,6 +29,7 @@
 	var passwd_check2 = false;
 	var	name_check = false;
 	var email_check = false;
+	var email_able = false;
 
 	$(document).ready(function() {
 	
@@ -175,7 +176,6 @@
 		});
 
 		//이메일
-		/*
 		$("#email_input").on("propertychange change keyup paste input", function() {
 			var email = $("#email_input").val();
 
@@ -184,24 +184,16 @@
 
 			if(email != "") {
 				if(emailCheck) {
-					email_check = true;
-					$("#email_input").removeClass('is-valid');
-					$("#email_input").removeClass('is-invalid');
-					$("#email_input").addClass('is-valid');	
+					email_able = true;
 				} else {
-					email_check = false;
-					$("#email_input").removeClass('is-valid');
-					$("#email_input").removeClass('is-invalid');
-					$("#email_input").addClass('is-invalid');		
+					email_able = false;
 				}
 			} else {
-				email_check = false;
-				$("#email_input").removeClass('is-valid');
-				$("#email_input").removeClass('is-invalid');
+				email_able = false;
 			}
 			
 		});
-		*/
+
 		
 	  $("#join_button").on("click", function(event) {
 			if(userid_check && passwd_check && passwd_check2 && name_check && email_check) {
@@ -214,24 +206,28 @@
 
 	  /* 인증번호 이메일 전송 */
 	  $(".mail_check_button").click(function(){
-	      var email = $(".mail_input").val();        // 입력한 이메일
-	      var checkBox = $(".mail_check_input");      // 인증번호 입력란
-	      var boxWrap = $(".mail_check_input_box");		// 인증번호 입력란 박스
-	      var mail_button = $(".mail_button");
-	      $.ajax({
-	          type:"GET",
-	          url:"/mailCheck?email=" + email,
-	          beforeSend:function() {
-							mail_button.html("<span class='spinner-border spinner-border-sm'></span>");
-		        },
-	          success:function(data) {
-		          alert("이메일이 전송되었습니다. 확인해주세요.");
-		          mail_button.html("인증번호 전송");
-							checkBox.attr("disabled", false);
-							boxWrap.attr("id", "mail_check_input_box_true");
-							code = data;
-		        }      
-	      });
+				if(email_able) {
+		      var email = $(".mail_input").val();        // 입력한 이메일
+		      var checkBox = $(".mail_check_input");      // 인증번호 입력란
+		      var boxWrap = $(".mail_check_input_box");		// 인증번호 입력란 박스
+		      var mail_button = $(".mail_button");
+		      $.ajax({
+		          type:"GET",
+		          url:"/mailCheck?email=" + email,
+		          beforeSend:function() {
+								mail_button.html("<span class='spinner-border spinner-border-sm'></span>");
+			        },
+		          success:function(data) {
+			          alert("이메일이 전송되었습니다. 확인해주세요.");
+			          mail_button.html("인증번호 전송");
+								checkBox.attr("disabled", false);
+								boxWrap.attr("id", "mail_check_input_box_true");
+								code = data;
+			        }      
+		      });
+				} else {
+					alert("보낼 수 있는 이메일이 아닙니다. 확인해주세요.");
+				}
 	  });
 
 	  /* 인증번호 비교 */
@@ -311,12 +307,12 @@
 								
 								<input type="email" name="email" class="form-control email mail_input"  id="email_input" placeholder="이메일" value="${email}" style="float:left;" required>
 								<div class="mail_check_button" style="float:left;">
-									<span class="btn btn-outline-secondary mail_button">인증번호 전송</span>
+									<span class="btn btn-success mail_button">인증번호 전송</span>
 								</div>
 								<div class="clearfix"></div>
 							</div>
 							
-							<div class="input-group mail_check_wrap">
+							<div class="mail_check_wrap">
 								<div class="mail_check_input_box" id="mail_check_input_box_false">
 									<input type="text" class="form-control mail_check_input" disabled="disabled">
 								</div>
@@ -324,6 +320,8 @@
 							</div>
 							
 						</div>
+						
+						<s:csrfInput />
 						
 						<p class="mt-4 mb-3 text-muted"></p>
 					</form>

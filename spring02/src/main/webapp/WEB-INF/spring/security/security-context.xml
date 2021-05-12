@@ -32,7 +32,9 @@
 	        login-processing-url="/user/login_check"
 	        authentication-success-handler-ref="userLoginSuccessHandler"
 	        authentication-failure-handler-ref="userLoginFailureHandler"
-	        username-parameter="userid" password-parameter="passwd" />
+	        username-parameter="userid" 
+	        password-parameter="passwd" 
+	        />
 	    
 	    <!-- 동시 접속 막기 -->
 	    <!--  
