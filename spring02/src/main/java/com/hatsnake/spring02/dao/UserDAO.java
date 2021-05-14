@@ -9,4 +9,5 @@ public interface UserDAO {
 	public Map<String, Object> selectUser(String userid);
 	public int idCheck(String userid);
 	public void cancleAccount(String userid);
+	public String currentPasswordCheck(String userid);
 }

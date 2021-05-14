@@ -8,13 +8,44 @@
 
 <link rel="stylesheet" href="/resources/css/formsign.css">
 <script>
+
+$(document).ready(function() {
+	
+	$(".currentPasswordCheck").on("click", function() {
+		var currentPassword = $(".currentPassword").val();
+
+		$.ajax({
+			type:"post",
+			url:"/user/currentPasswordCheck",
+			data: {currentPassword : `currentPassoword`},
+			success: function(result) {
+				if(result == 1) {
+					alert("성공");
+				} else {
+					alert("틀림");
+				}
+			}, 
+			fail: function() {
+				alert("에러발생. 다시 시도해주세요.");
+			}
+		});
+		
+	});
+	
+});
+
 function cancleAccount() {
 	if(window.confirm("정말 회원탈퇴하시겠습니까?")) {
-		$("#form1").submit();
+		$("#form2").submit();
 		return false;
 	};
 }
 </script>
+<style>
+#changePasswordBox {
+	display:none;
+}
+</style>
 </head>
 
 <body>
@@ -66,8 +97,33 @@ function cancleAccount() {
 					    <main class="form-signin" style="min-height:380px; padding:50px;">
 								<s:authorize access="isAuthenticated()">
 									
-									<form id="form1" name="form1" action="/user/cancleAccount" method="post">
-										<div class="btn btn-danger" onClick="cancleAccount()">회원탈퇴</div>
+									<h2 class="mb-4">비밀번호 변경</h2>
+
+									<div class="mb-3">
+									  <label for="exampleFormControlInput1" class="form-label">현재 비밀번호</label>
+									  <input type="password" class="form-control currentPassword" id="exampleFormControlInput1" placeholder="현재 비밀번호">
+									</div>
+									
+									<div class="btn btn-success currentPasswordCheck" style="display:block;">확인</div>
+
+									<div id="changePasswordBox">
+										<div class="mb-2">
+										  <label for="exampleFormControlInput1" class="form-label">바꿀 비밀번호</label>
+										  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="바꿀 비밀번호">
+										</div>
+										
+										<div class="mb-2">
+										  <input type="email" class="form-control" placeholder="비밀번호 중복 체크">
+										</div>			
+										
+										<div class="btn btn-warning">비밀번호 변경</div>
+									</div>
+									
+									<hr>						
+									
+									<h2 class="mb-4">회원 탈퇴</h2>
+									<form id="form2" name="form2" action="/user/cancleAccount" method="post">
+										<div class="btn btn-danger" style="display:block !important;" onClick="cancleAccount()">회원탈퇴</div>
 									</form>
 								</s:authorize>
 							</main>				    

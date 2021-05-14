@@ -35,4 +35,10 @@ public class UserDAOImpl implements UserDAO {
 		sqlSession.delete("user.cancleAccount", userid);
 	}
 
+	@Override
+	public String currentPasswordCheck(String userid) {
+		return sqlSession.selectOne("user.currentPasswordCheck", userid);
+	}
+
+
 }

@@ -21,4 +21,8 @@
  	<delete id="cancleAccount">
  		delete from users where userId = #{userid}
  	</delete>
+ 	
+ 	<select id="currentPasswordCheck" resultType="string">
+ 		select passwd from users where userId = #{userid}
+ 	</select>
  </mapper>

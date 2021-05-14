@@ -10,9 +10,11 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +34,7 @@ public class UserController {
 
 	@Inject
 	private UserDAO userDao;
+
 	
 	//로그인 페이지 이동
 	@RequestMapping(value="/user/login")
@@ -145,6 +148,28 @@ public class UserController {
 		}
 		
 		return "redirect:/";
+	}
+	
+	//현재 비밀번호 체크
+	@RequestMapping("/user/currentPasswordCheck")
+	@ResponseBody
+	public int currentPasswordCheck(String currentPassword, Principal principal) {
+		int result = 0;
+		
+		if(principal != null) {
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String userid = user.getUsername();
+			
+			try {
+				String password = userDao.currentPasswordCheck(userid);
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return result;
 	}
 
 }
