@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hatsnake.spring02.dao.BoardDAO;
 import com.hatsnake.spring02.domain.BoardDTO;
+import com.hatsnake.spring02.domain.CategoryDTO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -179,6 +180,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Map<String, Object> likeCheckByMap(Map<String, Object> map) {
 		return boardDao.likeCheckByMap(map);
+	}
+
+	//카테고리 리스트 출력
+	@Override
+	public List<CategoryDTO> getCategoryList() {
+		return boardDao.getCategoryList();
 	}
 
 }

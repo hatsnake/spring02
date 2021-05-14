@@ -1,6 +1,5 @@
 package com.hatsnake.spring02.controller;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Date;
@@ -8,15 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -90,7 +89,7 @@ public class UserController {
 	//사용자 정보 페이지
 	@RequestMapping(value="/user/profile")
 	public String profile(Model model, Principal principal) {
-		
+			
 		if(principal != null) {
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			UserDTO userDto = (UserDTO) user;
@@ -126,6 +125,26 @@ public class UserController {
 				return "success";
 			}
 			
+	}
+	
+	//사용자 탈퇴
+	@PostMapping("/user/cancleAccount")
+	public String cancleAccount(HttpSession session, Principal principal) {
+		
+		if(principal != null) {
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String userid = user.getUsername();
+			session.invalidate();
+			
+			try {
+				userDao.cancleAccount(userid);		
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return "redirect:/";
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hatsnake.spring02.domain.BoardDTO;
+import com.hatsnake.spring02.domain.CategoryDTO;
 
 public interface BoardService {
 
@@ -47,4 +48,6 @@ public interface BoardService {
 	public int getLikeCntByBno(int bno);
 
 	public Map<String, Object> likeCheckByMap(Map<String, Object> map);
+
+	public List<CategoryDTO> getCategoryList();
 }

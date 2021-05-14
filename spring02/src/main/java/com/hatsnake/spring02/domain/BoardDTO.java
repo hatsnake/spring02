@@ -13,6 +13,8 @@ public class BoardDTO {
 	private int recnt; //게시글 댓글 수
 	private String show; //게시글 삭제 상태 유무(y,n)
 	private String[] files;
+	private int categoryid;
+	private String categoryname;
 	
 	public int getBno() {
 		return bno;
@@ -68,12 +70,24 @@ public class BoardDTO {
 	public void setFiles(String[] files) {
 		this.files = files;
 	}
+	public int getCategoryid() {
+		return categoryid;
+	}
+	public void setCategoryid(int categoryid) {
+		this.categoryid = categoryid;
+	}
+	public String getCategoryname() {
+		return categoryname;
+	}
+	public void setCategoryname(String categoryname) {
+		this.categoryname = categoryname;
+	}
 	
 	@Override
 	public String toString() {
-		return "BoardDTO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer
-				+ ", regdate=" + regdate + ", viewcnt=" + viewcnt + ", recnt=" + recnt + ", show=" + show + ", files="
-				+ Arrays.toString(files) + "]";
+		return "BoardDTO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
+				+ regdate + ", viewcnt=" + viewcnt + ", recnt=" + recnt + ", show=" + show + ", files=" + Arrays.toString(files)
+				+ ", categoryid=" + categoryid + ", categoryname=" + categoryname + "]";
 	}
 	
 }

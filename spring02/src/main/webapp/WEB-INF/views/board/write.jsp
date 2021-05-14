@@ -128,6 +128,14 @@ $(document).ready(function() {
 						<!--
 							<span style="color:red;">${errMsg}</span>
 						-->
+						
+						<div class="mb-3">
+							<select id="category" name="categoryid" class="form-select" aria-label="Default select example">
+								<c:forEach var="category" items="${categoryList}">
+									<option value="${category.categoryid}">${category.categoryname}</option>
+								</c:forEach>
+							</select>
+						</div>
 				
 						<div class="mb-3">
 							<label for="exampleFormControlInput1" class="form-label">게시글 제목</label>

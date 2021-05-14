@@ -7,8 +7,8 @@
 	 <select id="listAll" resultType="com.hatsnake.spring02.domain.BoardDTO">
 	 	<include refid="pagingHeader"></include>
 	 	select rownum, bno, title, content, writer, regdate, viewcnt,
-	 	(select count(*) from reply where bno=b.bno) as recnt, show
-	 	from board b
+	 	(select count(*) from reply where bno=b.bno) as recnt, show, c.categoryname as categoryname
+	 	from board b join category c on b.categoryid = c.categoryid
 	 	<!-- WHERE절을 include 태그로 삽입 -->
 	 	<include refid="search"></include>
 	 	order by bno desc, regdate desc
@@ -19,8 +19,9 @@
 		<![CDATA[
 		select * from (
 			select rownum, bno, title, content, writer, regdate, viewcnt,
-			(select count(*) from reply where bno=b.bno) as recnt, show
-			from board b order by bno desc, regdate desc 
+			(select count(*) from reply where bno=b.bno) as recnt, show, c.categoryname as categoryname
+			from board b join category c on b.categoryid = c.categoryid 
+			order by bno desc, regdate desc 
 		) where rownum <= 10
 		]]>
 	 </select>
@@ -59,8 +60,8 @@
 	 
 	 <!-- 게시글 작성 -->
 	 <insert id="insert">
-	 	insert into board (bno, title, content, writer, show) 
-	 	values (seq_board.NEXTVAL, #{title}, #{content}, #{writer}, 'y')
+	 	insert into board (bno, title, content, writer, show, categoryid) 
+	 	values (seq_board.NEXTVAL, #{title}, #{content}, #{writer}, 'y', #{categoryid})
 	 </insert>
 	 
 	 <!-- 게시글 첨부파일 목록 -->
@@ -87,9 +88,10 @@
 	
 	 <!-- 게시글 상세보기 조회 -->
 	 <select id="view" resultType="com.hatsnake.spring02.domain.BoardDTO">
-	 	 select bno, title, content, b.regdate, writer, viewcnt, name, show, likecnt
-	 	 from board b, users u
-	 	 where b.writer = u.userid
+	 	 select bno, title, content, b.regdate, writer, viewcnt, name, 
+	 	 show, likecnt, c.categoryname as categoryname
+	 	 from board b, users u, category c
+	 	 where b.writer = u.userid and b.categoryid = c.categoryid
 	 	 and bno = #{bno}
 	 </select>
 	 
@@ -102,7 +104,7 @@
 	 <!-- 게시글 수정 처리 -->
 	 <update id="updateArticle">
 	 	update board set 
-	 	title = #{title}, content = #{content}
+	 	title = #{title}, content = #{content}, categoryid = #{categoryid}
 	 	where bno = #{bno}
 	 </update>
 	 
@@ -161,6 +163,10 @@
 	 <select id="getLikeCntByBno" resultType="int">
 	 	select likecnt from board
 	 	where bno = #{bno}
+	 </select>
+	 
+	 <select id="getCategoryList" resultType="com.hatsnake.spring02.domain.CategoryDTO">
+	 	select * from category
 	 </select>
 	 
  </mapper>

@@ -143,13 +143,13 @@ function formatDate(date) {
 												<a href="${path}/board/view?bno=${row.bno}&curPage=${map.boardPager.curPage}
 													&searchOption=${map.searchOption}&keyword=${map.keyword}">
 													<span class="readed" style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis; width:150px;">
-														${row.title}&nbsp;&nbsp;
+														[${row.categoryname}] ${row.title}&nbsp;&nbsp;
 													</span>
 													<!-- 댓글이 있으면 게시글 이름 옆에 댓글 수 출력 -->
 													<c:if test="${row.recnt > 0}">
 														<span style="color:red; font-size:17px;">
 															<i class="far fa-comment-dots"></i> 
-															${row.recnt}
+															 ${row.recnt}
 														</span>
 													</c:if>
 												</a>

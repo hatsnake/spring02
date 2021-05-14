@@ -17,4 +17,8 @@
  	<select id="idCheck" resultType="int">
  		select count(*) from users where userId = #{userId}
  	</select>
+ 	
+ 	<delete id="cancleAccount">
+ 		delete from users where userId = #{userid}
+ 	</delete>
  </mapper>

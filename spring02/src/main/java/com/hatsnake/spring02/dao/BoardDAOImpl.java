@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.hatsnake.spring02.domain.BoardDTO;
+import com.hatsnake.spring02.domain.CategoryDTO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -156,6 +157,12 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public Map<String, Object> likeCheckByMap(Map<String, Object> map) {
 		return sqlSession.selectOne("board.likeCheckByMap", map);
+	}
+
+
+	@Override
+	public List<CategoryDTO> getCategoryList() {
+		return sqlSession.selectList("board.getCategoryList");
 	}
 
 }

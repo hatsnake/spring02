@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hatsnake.spring02.domain.BoardDTO;
 import com.hatsnake.spring02.domain.BoardPager;
+import com.hatsnake.spring02.domain.CategoryDTO;
 import com.hatsnake.spring02.service.BoardService;
 import com.hatsnake.spring02.service.ReplyService;
 
@@ -78,6 +79,9 @@ public class BoardController {
 			username = user.getUsername();	
 		}
 		
+		List<CategoryDTO> categoryList = boardService.getCategoryList();
+
+		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("username", username);
 		
 		return "board/write";
@@ -205,6 +209,7 @@ public class BoardController {
 	//게시글 수정화면
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(Model model, @RequestParam int bno) throws Exception {
+		model.addAttribute("getCategoryList", boardService.getCategoryList());
 		model.addAttribute("dto", boardService.read(bno));
 		
 		return "board/update";

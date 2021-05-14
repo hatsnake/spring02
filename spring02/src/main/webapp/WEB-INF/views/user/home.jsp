@@ -46,7 +46,7 @@
 											<div class="card-body" style="padding:0px !important; ">
 												<a href="${path}/board/view?bno=${row.bno}">
 													<div class="card-title" style="margin:10px;">
-														<span class="readed">${row.title}</span> &nbsp;
+														<span class="readed">[${row.categoryname}] ${row.title}</span> &nbsp;
 														<!-- 댓글이 있으면 게시글 이름 옆에 댓글 수 출력 -->
 														<c:if test="${row.recnt > 0}">
 															<span style="color:red; font-size:17px;">

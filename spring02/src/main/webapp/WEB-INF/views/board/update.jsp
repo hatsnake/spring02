@@ -178,6 +178,16 @@ function listAttach() {
 						-->
 				
 						<div class="mb-3">
+							<select id="category" name="categoryid" class="form-select" aria-label="Default select example">
+								<c:forEach var="category" items="${getCategoryList}">
+									<option value="${category.categoryid}" 
+									<c:if test="${category.categoryid == dto.categoryid}">selected</c:if>
+									>${category.categoryname}</option>
+								</c:forEach>
+							</select>
+						</div>
+				
+						<div class="mb-3">
 							<label for="exampleFormControlInput1" class="form-label">게시글 제목</label>
 							<input type="text" name="title" class="title form-control" size="80" placeholder="게시글 제목" value="${dto.title}">
 						</div>

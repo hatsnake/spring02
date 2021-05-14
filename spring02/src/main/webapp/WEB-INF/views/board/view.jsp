@@ -400,14 +400,14 @@ function deleteReply(rno) {
 		
 			<div class="container" style="max-width:760px;">
 				
-				<h1 style="margin-left:15px;">카테고리 : 주식</h1>
+				<h1 style="margin-left:15px;">${dto.categoryname}</h1>
 				<div style="padding:20px !important; background:white; border-radius: 25px; box-shadow:1px 1px 5px gray;">
 					<c:choose>
 						<c:when test="${dto.show == 'y'}">
 							<form name="form1" method="post">
 								<!-- 제목 -->
 								<h3 style="margin-top:15px;">
-									<span style="font-size:12px; color:gray; margin-left:3px;">주식</span><br>
+									<span style="font-size:12px; color:gray; margin-left:3px;">${dto.categoryname}</span><br>
 									${dto.title}
 								</h3>
 								<hr>

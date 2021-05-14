@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hatsnake.spring02.domain.BoardDTO;
+import com.hatsnake.spring02.domain.CategoryDTO;
 
 public interface BoardDAO {
 
@@ -46,5 +47,7 @@ public interface BoardDAO {
 	public int getLikeCntByBno(int bno);
 
 	public Map<String, Object> likeCheckByMap(Map<String, Object> map);
+
+	public List<CategoryDTO> getCategoryList();
 
 }
