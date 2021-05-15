@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="user">
+ 	<insert id="insertUser">
+ 		insert into users (userid, passwd, name, enabled, authority, email) 
+ 		values (#{userid}, #{passwd}, #{name}, 1, 'ROLE_USER', #{email})
+ 	</insert>
+ 	
+ 	<select id="selectUser" resultType="java.util.Map">
+ 		select userid as username, passwd as password, name, enabled, authority, email, regDate, updateDate
+ 		from users where userid=#{userid}
+ 	</select>
+ 	
+ 	<select id="idCheck" resultType="int">
+ 		select count(*) from users where userId = #{userId}
+ 	</select>
+ 	
+ 	<delete id="cancleAccount">
+ 		delete from users where userId = #{userid}
+ 	</delete>
+ 	
+ 	<select id="currentPasswordCheck" resultType="string">
+ 		select passwd from users where userId = #{userid}
+ 	</select>
+ </mapper>

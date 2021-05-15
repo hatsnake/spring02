@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 공통된 패키지를 적고 사용할 이름을 @Alias("사용할 이름") 형태로 적고 사용 -->
+	<!--  
+	<typeAliases>
+		<package name="com.hatsnake.spring02.domain"/>
+	</typeAliases>
+	-->	
+</configuration>
