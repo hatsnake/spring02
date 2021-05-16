@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="/resources/css/formsign.css">
 <script>
+var email_able = false;
 
 $(document).ready(function() {
 	
@@ -31,6 +32,51 @@ $(document).ready(function() {
 		});
 		
 	});
+
+  /* 인증번호 이메일 전송 */
+  $(".mail_check_button").click(function(){
+	 		emailRegex();
+	  
+			if(email_able) {
+	      var email = $(".mail_input").val();        // 입력한 이메일
+	      var checkBox = $(".mail_check_input");      // 인증번호 입력란
+	      var boxWrap = $(".mail_check_input_box");		// 인증번호 입력란 박스
+	      var mail_button = $(".mail_button");
+	      $.ajax({
+	          type:"GET",
+	          url:"/mailCheck?email=" + email,
+	          beforeSend:function() {
+							mail_button.html("<span class='spinner-border spinner-border-sm'></span>");
+		        },
+	          success:function(data) {
+		          alert("이메일이 전송되었습니다. 확인해주세요.");
+		          mail_button.html("인증번호 전송");
+							checkBox.attr("disabled", false);
+							boxWrap.attr("id", "mail_check_input_box_true");
+							code = data;
+		        }      
+	      });
+			} else {
+				alert("보낼 수 있는 이메일이 아닙니다. 확인해주세요.");
+			}
+  });
+
+  /* 인증번호 비교 */
+  $(".mail_check_input").on("blur propertychange change keyup paste input", function(){
+    var inputCode = $(".mail_check_input").val();        // 입력코드    
+    var checkResult = $("#mail_check_input_box_warn");    // 비교 결과
+		var mailButton = $(".mail_button");
+    if(inputCode == code){                            // 일치할 경우
+        checkResult.html("인증번호가 일치합니다.");
+        checkResult.attr("class", "correct");    
+        email_check = true;  
+    } else {                                          // 일치하지 않을 경우
+        checkResult.html("인증번호를 다시 확인해주세요.");
+        checkResult.attr("class", "incorrect");
+        email_check = false;
+    }   
+    
+  });
 	
 });
 
@@ -40,10 +86,40 @@ function cancleAccount() {
 		return false;
 	};
 }
+
+function emailRegex() {
+  var email = "${email}";
+	
+	var emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	var emailCheck = emailRegex.test(email);
+
+	if(email != "") {
+		if(emailCheck) {
+			email_able = true;
+		} else {
+			email_able = false;
+		}
+	} else {
+		email_able = false;
+	}
+}
 </script>
 <style>
 #changePasswordBox {
 	display:none;
+}
+#mail_check_input_box_false{
+    background-color:#ebebe4;
+}
+ 
+#mail_check_input_box_true{
+    background-color:white;
+}
+.correct{
+    color : green;
+}
+.incorrect{
+    color : red;
 }
 </style>
 </head>
@@ -99,24 +175,25 @@ function cancleAccount() {
 									
 									<h2 class="mb-4">비밀번호 변경</h2>
 
-									<div class="mb-3">
-									  <label for="exampleFormControlInput1" class="form-label">현재 비밀번호</label>
-									  <input type="password" class="form-control currentPassword" id="exampleFormControlInput1" placeholder="현재 비밀번호">
-									</div>
+									<!-- 이메일 테스트 -->
+									<div class="mail_wrap">
 									
-									<div class="btn btn-success currentPasswordCheck" style="display:block;">확인</div>
-
-									<div id="changePasswordBox">
-										<div class="mb-2">
-										  <label for="exampleFormControlInput1" class="form-label">바꿀 비밀번호</label>
-										  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="바꿀 비밀번호">
+										<div class="input-group mail_input_box mb-2">
+											
+											<input type="email" name="email" class="form-control email mail_input"  id="email_input" placeholder="이메일" value="${email}" style="float:left;" required disabled>
+											<div class="mail_check_button" style="float:left;">
+												<span class="btn btn-success mail_button">인증번호 전송</span>
+											</div>
+											<div class="clearfix"></div>
 										</div>
 										
-										<div class="mb-2">
-										  <input type="email" class="form-control" placeholder="비밀번호 중복 체크">
-										</div>			
+										<div class="mail_check_wrap">
+											<div class="mail_check_input_box" id="mail_check_input_box_false">
+												<input type="text" class="form-control mail_check_input" disabled="disabled">
+											</div>
+											<span id="mail_check_input_box_warn"></span>
+										</div>
 										
-										<div class="btn btn-warning">비밀번호 변경</div>
 									</div>
 									
 									<hr>						
