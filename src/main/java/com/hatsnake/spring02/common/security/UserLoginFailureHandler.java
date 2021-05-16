@@ -32,8 +32,8 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 		request.setAttribute("userid", userid);
 		request.setAttribute("passwd", passwd);
 	
-		request.getRequestDispatcher("/user/login").forward(request, response);
-		//response.sendRedirect("/user/login?error");
+		//request.getRequestDispatcher("/user/login").forward(request, response);
+		response.sendRedirect("/user/login?error=true");
 		
 	}
 

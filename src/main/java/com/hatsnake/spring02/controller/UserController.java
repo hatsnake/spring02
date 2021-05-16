@@ -38,10 +38,23 @@ public class UserController {
 	
 	//로그인 페이지 이동
 	@RequestMapping(value="/user/login")
-	public String login(HttpServletRequest request) {
+	public String login(HttpServletRequest request, 
+			@RequestParam(value="error", defaultValue="false") boolean error, Model model) {
 		String referrer = request.getHeader("Referer");
 		request.getSession().setAttribute("prevPage", referrer);
-
+		
+		System.out.println(referrer);
+		
+		if(referrer.equals("http://localhost:8090/user/login") ) {
+			referrer = "http://localhost:8090";
+			request.getSession().setAttribute("prevPage", referrer);
+			System.out.println("true");
+		}
+		
+		if(error) {
+			model.addAttribute("error", "아이디나 비밀번호가 잘못되었습니다.");
+		}
+		
 		return "user/login";
 	}
 	
