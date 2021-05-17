@@ -37,13 +37,13 @@
 	 	<choose>
 	 		<!-- 검색옵션이 전체 검색일 경우 -->
 	 		<when test="searchOption == 'all'">
-	 			where writer like '%'||#{keyword}||'%'
+	 			where (writer like '%'||#{keyword}||'%'
 	 			or content like '%'||#{keyword}||'%'
-	 			or title like '%'||#{keyword}||'%'
+	 			or title like '%'||#{keyword}||'%') and show = 'y'
 	 		</when>
 	 		<!-- 전체 검색이 아닐 경우 -->
 	 		<otherwise>
-	 			where ${searchOption} like '%'||#{keyword}||'%'
+	 			where ${searchOption} like '%'||#{keyword}||'%' and show = 'y'
 	 		</otherwise>
 	 	</choose>
 	 </sql>

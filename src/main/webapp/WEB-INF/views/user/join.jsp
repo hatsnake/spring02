@@ -1,24 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>    
-<!DOCTYPE html>
-<html>
-<head>
-<%@ include file="../include/util.jsp" %>
+    pageEncoding="UTF-8"%>
+    
+<%@ include file="../include/subpages/utils.jsp" %>
 
-<link rel="stylesheet" href="/resources/css/formsign.css">
 <style>
 #mail_check_input_box_false{
     background-color:#ebebe4;
 }
  
 #mail_check_input_box_true{
-    background-color:white;
+    background-color:#66d432;
 }
 .correct{
-    color : green;
+    color : #66d432;
 }
 .incorrect{
-    color : red;
+    color : #ebebe4;
+}
+.label-style {
+  color: #888888;
+  font-size: 15px;;
 }
 </style>
 
@@ -211,6 +212,7 @@
 		      var checkBox = $(".mail_check_input");      // 인증번호 입력란
 		      var boxWrap = $(".mail_check_input_box");		// 인증번호 입력란 박스
 		      var mail_button = $(".mail_button");
+		      
 		      $.ajax({
 		          type:"GET",
 		          url:"/mailCheck?email=" + email,
@@ -235,6 +237,7 @@
 	    var inputCode = $(".mail_check_input").val();        // 입력코드    
 	    var checkResult = $("#mail_check_input_box_warn");    // 비교 결과
 			var mailButton = $(".mail_button");
+			
 	    if(inputCode == code){                            // 일치할 경우
 	        checkResult.html("인증번호가 일치합니다.");
 	        checkResult.attr("class", "correct");    
@@ -249,93 +252,167 @@
 	  
 	});
 </script>
-</head>
 
-<body>
+<body class="g-sidenav-show   bg-gray-100">
+  <%@ include file="../include/subpages/sidebar.jsp" %>
 
-    <div class="wrapper">
-		<%@ include file="../include/sidebar.jsp" %>
+  <main class="main-content mt-1 border-radius-lg">
+    <%@ include file="../include/subpages/header.jsp" %>
 
-        <!-- Page Content  -->
-        <div id="content">
+    <div class="container-fluid py-4">
 
-			<%@ include file="../include/header.jsp" %>
-		
-			<div class="container" style="margin: 10.5rem auto;">
-				<main class="form-signin">
-					<form class="needs-validation" action="${path}/user/insertUser" id="form1" method="post" novalidate>
-						<!--  
-							<img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-						-->
-						<h1 class="h3 mb-3 fw-normal text-center">회원가입</h1>
-						<!--
-							<span style="color:red;">${errMsg}</span>
-						-->
-				
-						<div class="form-floating mb-3">
-							<input type="text" name="userid" class="form-control userid" id="userid_input" placeholder="아이디" value="${userid}" required>
-							<label for="floatingInput">아이디</label>
-							<div class="valid-feedback" id="userid_success"></div>
-							<div class="invalid-feedback" id="userid_fail"></div>
-						</div>
-						
-						<div class="form-floating mb-2">
-							<input type="password" name="passwd" class="form-control passwd" id="passwd_input" placeholder="비밀번호" value="${passwd}" required>
-							<label for="floatingPassword">비밀번호</label>
-							<div class="valid-feedback" id="passwd_success">사용할 수 있는 비밀번호입니다.</div>
-							<div class="invalid-feedback" id="passwd_fail">사용할 수 없는 비밀번호입니다.</div>
-						</div>
+      <!-- CONTENTS -->
+      <div class="row">
+        
+        <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4" style="margin:0 auto;">
+          <div class="card h-100">
+            <div class="card-header pb-0 p-3">
+              <div class="row">
+                <div class="col-md-8 d-flex align-items-center">
+                  <h4 class="mb-0">회원 가입</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-3">
+              <form class="needs-validation" action="${path}/user/insertUser" id="form1" method="post" novalidate>
+                <div class="form-floating mb-4">
+                  <input type="text" name="userid" class="form-control userid" id="userid_input" placeholder="아이디" value="${userid}" required>
+                  <label for="floatingInput" class="label-style">아이디</label>
+                  <div class="valid-feedback" id="userid_success"></div>
+                  <div class="invalid-feedback" id="userid_fail"></div>
+                </div>
 
-						<div class="form-floating mb-3">
-							<input type="password" name="passwd2" class="form-control passwd" id="passwd2_input" placeholder="비밀번호 확인" required>
-							<label for="floatingPassword">비밀번호 확인</label>
-							<div class="valid-feedback" id="passwd2_success">비밀번호가 같습니다.</div>
-							<div class="invalid-feedback" id="passwd2_fail">비밀번호가 다릅니다.</div>
-						</div>
+                <div class="form-floating mb-2">
+                  <input type="password" name="passwd" class="form-control passwd" id="passwd_input" placeholder="비밀번호" value="${passwd}" required>
+                  <label for="floatingPassword" class="label-style">비밀번호</label>
+                  <div class="valid-feedback" id="passwd_success">사용할 수 있는 비밀번호입니다.</div>
+                  <div class="invalid-feedback" id="passwd_fail">사용할 수 없는 비밀번호입니다.</div>
+                </div> 
 
-						<div class="form-floating mb-3">
-							<input type="text" name="name" class="form-control userid" id="name_input" placeholder="이름" value="${name}" required>
-							<label for="floatingInput">이름</label>
-							<div class="valid-feedback" id="name_success">사용할 수 있는 이름입니다.</div>
-							<div class="invalid-feedback" id="name_fail">사용할 수 없는 이름입니다.</div>
-						</div>
-						
-						<!-- 이메일 테스트 -->
-						<div class="mail_wrap">
-						
-							<div class="input-group mail_input_box mb-2">
-								
-								<input type="email" name="email" class="form-control email mail_input"  id="email_input" placeholder="이메일" value="${email}" style="float:left;" required>
-								<div class="mail_check_button" style="float:left;">
-									<span class="btn btn-success mail_button">인증번호 전송</span>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							
-							<div class="mail_check_wrap">
-								<div class="mail_check_input_box" id="mail_check_input_box_false">
-									<input type="text" class="form-control mail_check_input" disabled="disabled">
-								</div>
-								<span id="mail_check_input_box_warn"></span>
-							</div>
-							
-						</div>
-						
-						<s:csrfInput />
-						
-						<p class="mt-4 mb-3 text-muted"></p>
-					</form>
-					
-					<button class="w-100 btn btn-md btn-primary mb-2" id="join_button" type="button">회원가입</button>
-					<button class="w-100 btn btn-md btn-secondary mb-2" type="button" onclick="history.back()">나가기</button>
-				</main>
-			</div>
+                <div class="form-floating mb-4">
+                  <input type="password" name="passwd2" class="form-control passwd" id="passwd2_input" placeholder="비밀번호 확인" required>
+                  <label for="floatingPassword" class="label-style">비밀번호 확인</label>
+                  <div class="valid-feedback" id="passwd2_success">비밀번호가 같습니다.</div>
+                  <div class="invalid-feedback" id="passwd2_fail">비밀번호가 다릅니다.</div>
+                </div>
 
-			<%@ include file="../include/footer.jsp" %>
+                <div class="form-floating mb-4">
+                  <input type="text" name="name" class="form-control userid" id="name_input" placeholder="이름" value="${name}" required>
+                  <label for="floatingInput" class="label-style">이름</label>
+                  <div class="valid-feedback" id="name_success">사용할 수 있는 이름입니다.</div>
+                  <div class="invalid-feedback" id="name_fail">사용할 수 없는 이름입니다.</div>
+                </div>
 
+                <!-- 이메일 테스트 -->
+                <div class="mail_wrap mb-4">
+                
+                  <div class="input-group mail_input_box mb-2">
+                    <input type="email" name="email" class="form-control email mail_input"  id="email_input" placeholder="이메일" value="${email}" aria-describedby="button-addon1" required>
+                    <div class="btn btn-success mb-0 mail_check_button" id="button-addon1">
+                    	<span class="mail_button">인증번호 전송</span>
+                    </div>
+                  </div>
+                  
+                  <div class="mail_check_wrap">
+                    <div class="mail_check_input_box" id="mail_check_input_box_false">
+                      <input type="text" class="form-control mail_check_input" disabled="disabled">
+                    </div>
+                    <span id="mail_check_input_box_warn"></span>
+                  </div>
+                  
+                </div>
+                
+                <s:csrfInput />
+             </form>
+
+             <button class="w-100 btn btn-md btn-info mb-2" id="join_button" type="button">회원가입</button>
+             <hr>
+             <div> 
+              이미 회원이신가요? <a href="${path}/user/login" style="text-decoration: underline; color:royalblue;">로그인</a>하기
+             </div>
+            </div>
+          </div>
         </div>
+        
+        
+      </div>
+
+      <!-- END CONTENTS -->  
+
+      <%@ include file="../include/subpages/footer.jsp" %>
+
     </div>
 
-    <div class="overlay"></div>
+  </main>
+  <div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+      <i class="fa fa-cog py-2"> </i>
+    </a>
+    <div class="card shadow-lg ">
+      <div class="card-header pb-0 pt-3 ">
+        <div class="float-start">
+          <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
+          <p>See our dashboard options.</p>
+        </div>
+        <div class="float-end mt-4">
+          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+        <!-- End Toggle Button -->
+      </div>
+      <hr class="horizontal dark my-1">
+      <div class="card-body pt-sm-3 pt-0">
+        <!-- Sidebar Backgrounds -->
+        <div>
+          <h6 class="mb-0">Sidebar Colors</h6>
+        </div>
+        <a href="javascript:void(0)" class="switch-trigger background-color">
+          <div class="badge-colors my-2 text-start">
+            <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
+          </div>
+        </a>
+        <!-- Sidenav Type -->
+        <div class="mt-3">
+          <h6 class="mb-0">Sidenav Type</h6>
+          <p class="text-sm">Choose between 2 different sidenav types.</p>
+        </div>
+        <div class="d-flex">
+          <button class="btn bg-gradient-primary w-100 px-3 mb-2 active" data-class="bg-transparent" onclick="sidebarType(this)">Transparent</button>
+          <button class="btn bg-gradient-primary w-100 px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
+        </div>
+        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
+        <!-- Navbar Fixed -->
+        <div class="mt-3">
+          <h6 class="mb-0">Navbar Fixed</h6>
+        </div>
+        <div class="form-check form-switch ps-0">
+          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
+        </div>
+        <hr class="horizontal dark my-sm-4">
+        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard">Free download</a>
+        <a class="btn btn-outline-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard">View documentation</a>
+        <div class="w-100 text-center">
+          <a class="github-button" href="https://github.com/creativetimofficial/soft-ui-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub">Star</a>
+          <h6 class="mt-3">Thank you for sharing!</h6>
+          <a href="https://twitter.com/intent/tweet?text=Check%20Soft%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
+            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/soft-ui-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
+            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%@ include file="../include/subpages/footerScript.jsp" %>
+  
 </body>
+
 </html>

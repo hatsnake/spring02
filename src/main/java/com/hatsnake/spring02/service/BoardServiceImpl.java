@@ -27,16 +27,17 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.listAll();
 	}
 	*/
-
-	@Override
-	public List<BoardDTO> listLimit() throws Exception {
-		return boardDao.listLimit();
-	}
 	
 	//게시글 전체 조회 (검색)
 	@Override
 	public List<BoardDTO> listAll(int start, int end, String searchOption, String keyword) throws Exception {
 		return boardDao.listAll(start, end, searchOption, keyword);
+	}
+	
+	//메인에서 게시글 조회
+	@Override
+	public List<BoardDTO> listLimit() throws Exception {
+		return boardDao.listLimit();
 	}
 
 	//게시글 레코드 갯수

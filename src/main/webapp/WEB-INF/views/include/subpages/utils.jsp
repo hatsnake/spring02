@@ -35,8 +35,8 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
   <link href="/resources/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="/resources/assets/css/soft-ui-dashboard.css?v=1.0.2" rel="stylesheet" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
   <script>
     $(document).ready(function() {
       var win = navigator.platform.indexOf('Win') > -1;

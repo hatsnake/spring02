@@ -2,15 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="s"%>
 
+<style>
+#myUsername {
+	pointer-events: none !important;
+	cursor: default !important;
+}
+</style>
+
 <!-- Navbar -->
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl mt-4" id="navbarBlur" style="background:white;">
   <div class="container-fluid py-1 px-3">
     <nav aria-label="breadcrumb">
-      <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
-      </ol>
-      <h6 class="font-weight-bolder mb-0">Tables</h6>
+	    <a class="navbar-brand m-0 text-center" href="${path}/">
+	      <h4>ShareHappy</h4>
+	    </a>
     </nav>
     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
       <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
@@ -40,7 +45,7 @@
             </a>
             <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
               <li class="mb-2">
-                <span class="dropdown-item border-radius-md">
+                <span class="dropdown-item border-radius-md" id="myUsername">
                   <s:authentication property="principal" var="user"/>
                   ${user.username} 님
                 </span>

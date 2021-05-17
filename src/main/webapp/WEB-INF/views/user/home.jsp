@@ -39,7 +39,7 @@
                       <c:when test="${row.show == 'y'}">
                         
                           <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                            <a href="${path}/board/view?bno=${row.bno}" style="width:100%; display:block;">
+                            <a href="${path}/board/view?bno=${row.bno}&categoryid=${row.categoryid}" style="width:100%; display:block;">
                               [${row.categoryname}] ${row.title} 
                             
                               <c:if test="${row.recnt > 0}">
